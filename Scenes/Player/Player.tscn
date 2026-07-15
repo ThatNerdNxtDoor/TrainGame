@@ -9,3 +9,7 @@ script = ExtResource("1_s0eop")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1516133686]
 shape = SubResource("CapsuleShape3D_g4v7s")
+
+[node name="Pivot" type="Node3D" parent="." unique_id=738740531]
+
+[node name="Camera3D" type="Camera3D" parent="Pivot" unique_id=1887927873]
