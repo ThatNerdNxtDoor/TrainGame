@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cspb8hckgrlvb"]
 
 [ext_resource type="ArrayMesh" uid="uid://cw8sp0fc331lt" path="res://Assets/Models/Steam punk room.glb" id="1_6frt8"]
+[ext_resource type="PackedScene" uid="uid://dfcey8ugr8mqd" path="res://Scenes/Player/UI/PostProcessingLayer.tscn" id="1_usjl8"]
 [ext_resource type="Shader" uid="uid://cc7u6pr8vo4ct" path="res://Assets/Shaders and materials/Toon.gdshader" id="2_imbhg"]
 [ext_resource type="Texture2D" uid="uid://88h411jrpoa4" path="res://Assets/Sprites/Wall Textures/TileTile.png" id="3_usjl8"]
 [ext_resource type="Texture2D" uid="uid://vrvpf255h7k4" path="res://Assets/Sprites/Wall Textures/BrickTile.png" id="4_lpl7w"]
@@ -30,8 +31,16 @@ size = Vector3(1.9180298, 0.20275879, 2.1080322)
 
 [sub_resource type="Environment" id="Environment_d0u6y"]
 ambient_light_color = Color(0.858443, 0.5980074, 0.67488337, 1)
+tonemap_mode = 3
+ssao_enabled = true
+ssao_radius = 1.63
+ssao_intensity = 3.89
+ssao_power = 1.7230481
+ssao_light_affect = 0.29
 
 [node name="TestScene" type="Node3D" unique_id=422498756]
+
+[node name="CanvasLayer" parent="." unique_id=1286912542 instance=ExtResource("1_usjl8")]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1315787351]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
@@ -81,7 +90,6 @@ transform = Transform3D(1, 0, 0, 0, 0.8921798, -0.45168045, 0, 0.45168045, 0.892
 
 [node name="Node3D7" parent="." unique_id=1891839240 instance=ExtResource("6_imbhg")]
 transform = Transform3D(1, 0, 0, 0, 0.8921798, -0.45168045, 0, 0.45168045, 0.8921798, 11.279909, 3.17889, 0.8083128)
-speed = -2.0
 
 [node name="Node3D6" parent="." unique_id=727531171 instance=ExtResource("6_imbhg")]
 transform = Transform3D(1, 0, 0, 0, 0.99980754, 0.01961822, 0, -0.01961822, 0.99980754, 11.279909, 6.8155737, 3.3587146)

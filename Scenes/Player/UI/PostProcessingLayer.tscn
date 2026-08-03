@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://dfcey8ugr8mqd"]
+
+[ext_resource type="Shader" uid="uid://b8etb8jhl0hom" path="res://Assets/Shaders and materials/CustomPostProcessing.gdshader" id="1_dm4ce"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lpl7w"]
+shader = ExtResource("1_dm4ce")
+shader_parameter/vin_strength = 0.75
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=1286912542]
+
+[node name="Control" type="Control" parent="." unique_id=2015426369]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=334805424]
+material = SubResource("ShaderMaterial_lpl7w")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
