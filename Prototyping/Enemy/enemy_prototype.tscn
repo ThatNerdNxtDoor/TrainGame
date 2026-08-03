@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://b0qrkg7kuqb2x"]
+
+[ext_resource type="Script" uid="uid://c30ga2nn30ta8" path="res://Prototyping/Enemy/Enemy.gd" id="1_mex8l"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_g4v7s"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g4v7s"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_g4v7s"]
+radius = 5.0
+
+[node name="EnemyPrototype" type="CharacterBody3D" unique_id=722079134 node_paths=PackedStringArray("nav_agent", "nav_timer")]
+script = ExtResource("1_mex8l")
+nav_agent = NodePath("NavigationAgent3D")
+nav_timer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="." unique_id=480754252]
+one_shot = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=954013401]
+mesh = SubResource("CapsuleMesh_g4v7s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1666936253]
+shape = SubResource("CapsuleShape3D_g4v7s")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1155345860]
+
+[node name="Area3D" type="Area3D" parent="." unique_id=304547980]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=7204859]
+shape = SubResource("SphereShape3D_g4v7s")
