@@ -1,3 +1,95 @@
 [gd_scene format=3 uid="uid://cspb8hckgrlvb"]
 
+[ext_resource type="ArrayMesh" uid="uid://cw8sp0fc331lt" path="res://Assets/Models/Steam punk room.glb" id="1_6frt8"]
+[ext_resource type="Shader" uid="uid://cc7u6pr8vo4ct" path="res://Assets/Shaders and materials/Toon.gdshader" id="2_imbhg"]
+[ext_resource type="Texture2D" uid="uid://88h411jrpoa4" path="res://Assets/Sprites/Wall Textures/TileTile.png" id="3_usjl8"]
+[ext_resource type="Texture2D" uid="uid://vrvpf255h7k4" path="res://Assets/Sprites/Wall Textures/BrickTile.png" id="4_lpl7w"]
+[ext_resource type="PackedScene" uid="uid://bgffdlisv23pj" path="res://Scrapped stuff/Player.tscn" id="5_usjl8"]
+[ext_resource type="PackedScene" uid="uid://bipinsqxxdoim" path="res://Scenes/Objects/Gear.tscn" id="6_imbhg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6frt8"]
+render_priority = 0
+shader = ExtResource("2_imbhg")
+shader_parameter/color_tint = Color(0.816462, 0.8038381, 0.67509174, 1)
+shader_parameter/tex = ExtResource("3_usjl8")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_12opn"]
+render_priority = 0
+shader = ExtResource("2_imbhg")
+shader_parameter/color_tint = Color(0.74941385, 0.43615445, 0.28678855, 1)
+shader_parameter/tex = ExtResource("4_lpl7w")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g4v7s"]
+size = Vector3(0.5998535, 2.3359375, 2.1080322)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_imbhg"]
+size = Vector3(2.6680298, 2.3359375, 0.4192505)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_usjl8"]
+size = Vector3(1.9180298, 0.20275879, 2.1080322)
+
+[sub_resource type="Environment" id="Environment_d0u6y"]
+ambient_light_color = Color(0.858443, 0.5980074, 0.67488337, 1)
+
 [node name="TestScene" type="Node3D" unique_id=422498756]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1315787351]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+mesh = ExtResource("1_6frt8")
+surface_material_override/0 = SubResource("ShaderMaterial_6frt8")
+surface_material_override/1 = SubResource("ShaderMaterial_12opn")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=1402684026]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=570672326]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3025944, 0.66796875, -0.070007324)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=401887039]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25514528, 0.66796875, -1.213633)
+shape = SubResource("BoxShape3D_imbhg")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=932899696]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25514528, 0.66796875, 1.2170357)
+shape = SubResource("BoxShape3D_imbhg")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=58237476]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.310239, 0.66796875, -0.070007324)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=200457925]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.02252171, -0.06422768, -0.070007324)
+shape = SubResource("BoxShape3D_usjl8")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1334049852]
+environment = SubResource("Environment_d0u6y")
+
+[node name="Player" parent="." unique_id=2015188525 instance=ExtResource("5_usjl8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=422185130]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24, 0)
+light_energy = 3.218
+light_bake_mode = 1
+omni_range = 35.68502
+
+[node name="Node3D" parent="." unique_id=1203548267 instance=ExtResource("6_imbhg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.279909, 8.716499, -3.4847438)
+
+[node name="Node3D5" parent="." unique_id=1314609801 instance=ExtResource("6_imbhg")]
+transform = Transform3D(1, 0, 0, 0, 0.8921798, -0.45168045, 0, 0.45168045, 0.8921798, 11.279909, 11.2158575, 4.270026)
+
+[node name="Node3D7" parent="." unique_id=1891839240 instance=ExtResource("6_imbhg")]
+transform = Transform3D(1, 0, 0, 0, 0.8921798, -0.45168045, 0, 0.45168045, 0.8921798, 11.279909, 3.17889, 0.8083128)
+speed = -2.0
+
+[node name="Node3D6" parent="." unique_id=727531171 instance=ExtResource("6_imbhg")]
+transform = Transform3D(1, 0, 0, 0, 0.99980754, 0.01961822, 0, -0.01961822, 0.99980754, 11.279909, 6.8155737, 3.3587146)
+speed = -2.0
+
+[node name="Node3D2" parent="." unique_id=1369195543 instance=ExtResource("6_imbhg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.279909, 12.007029, -0.21496703)
+speed = -2.0
+
+[node name="Node3D3" parent="." unique_id=789137947 instance=ExtResource("6_imbhg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.279909, 16.20331, 1.3711103)

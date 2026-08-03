@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://bipinsqxxdoim"]
+
+[ext_resource type="Script" uid="uid://bfkomyju0wsul" path="res://Scripts/Objects/ConstantTurningThing.gd" id="1_xen3h"]
+[ext_resource type="ArrayMesh" uid="uid://cil5denfysiwd" path="res://Assets/Models/Gear.glb" id="2_2xxx7"]
+[ext_resource type="Shader" uid="uid://cc7u6pr8vo4ct" path="res://Assets/Shaders and materials/Toon.gdshader" id="3_2xxx7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0vhw6"]
+render_priority = 0
+shader = ExtResource("3_2xxx7")
+shader_parameter/color_tint = Color(0.6156863, 0.62352943, 0.69803923, 1)
+
+[node name="Node3D" type="Node3D" unique_id=1203548267]
+script = ExtResource("1_xen3h")
+axis = Vector3(1, 0, 0)
+speed = 2.0
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=184125376]
+transform = Transform3D(-8.742278e-08, -2, 0, 2, -8.742278e-08, 0, 0, 0, 2, 0, 0, 0)
+mesh = ExtResource("2_2xxx7")
+surface_material_override/0 = SubResource("ShaderMaterial_0vhw6")
