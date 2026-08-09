@@ -3,21 +3,27 @@
 [ext_resource type="ArrayMesh" uid="uid://cw8sp0fc331lt" path="res://Assets/Models/Steam punk room.glb" id="1_6frt8"]
 [ext_resource type="PackedScene" uid="uid://dfcey8ugr8mqd" path="res://Scenes/Player/UI/PostProcessingLayer.tscn" id="1_usjl8"]
 [ext_resource type="Shader" uid="uid://cc7u6pr8vo4ct" path="res://Assets/Shaders and materials/Toon.gdshader" id="2_imbhg"]
+[ext_resource type="ArrayMesh" uid="uid://dajd37glggtou" path="res://Assets/Models/Lamp.glb" id="2_lpl7w"]
 [ext_resource type="Texture2D" uid="uid://88h411jrpoa4" path="res://Assets/Sprites/Wall Textures/TileTile.png" id="3_usjl8"]
 [ext_resource type="Texture2D" uid="uid://vrvpf255h7k4" path="res://Assets/Sprites/Wall Textures/BrickTile.png" id="4_lpl7w"]
 [ext_resource type="PackedScene" uid="uid://bgffdlisv23pj" path="res://Scrapped stuff/Player.tscn" id="5_usjl8"]
 [ext_resource type="PackedScene" uid="uid://bipinsqxxdoim" path="res://Scenes/Objects/Gear.tscn" id="6_imbhg"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yf5fn"]
+render_priority = 0
+shader = ExtResource("2_imbhg")
+shader_parameter/color_tint = Color(0.31179678, 0.723387, 0.8407927, 1)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6frt8"]
 render_priority = 0
 shader = ExtResource("2_imbhg")
-shader_parameter/color_tint = Color(0.816462, 0.8038381, 0.67509174, 1)
+shader_parameter/color_tint = Color(0.93, 0.93, 0.93, 1)
 shader_parameter/tex = ExtResource("3_usjl8")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_12opn"]
 render_priority = 0
 shader = ExtResource("2_imbhg")
-shader_parameter/color_tint = Color(0.74941385, 0.43615445, 0.28678855, 1)
+shader_parameter/color_tint = Color(0.6070021, 0.5107113, 0.3959314, 1)
 shader_parameter/tex = ExtResource("4_lpl7w")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_g4v7s"]
@@ -27,20 +33,87 @@ size = Vector3(0.5998535, 2.3359375, 2.1080322)
 size = Vector3(2.6680298, 2.3359375, 0.4192505)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_usjl8"]
-size = Vector3(1.9180298, 0.20275879, 2.1080322)
+size = Vector3(2.0947418, 0.16485596, 2.1189575)
 
 [sub_resource type="Environment" id="Environment_d0u6y"]
-ambient_light_color = Color(0.858443, 0.5980074, 0.67488337, 1)
-tonemap_mode = 3
+ambient_light_source = 2
+ambient_light_color = Color(0.25656432, 0.2529325, 0.30550298, 1)
+tonemap_mode = 1
 ssao_enabled = true
 ssao_radius = 1.63
 ssao_intensity = 3.89
 ssao_power = 1.7230481
-ssao_light_affect = 0.29
+ssao_light_affect = 0.39
+ssil_enabled = true
+ssil_radius = 1.98
+ssil_intensity = 0.75
+ssil_sharpness = 0.51
+
+[sub_resource type="BoxMesh" id="BoxMesh_g4v7s"]
 
 [node name="TestScene" type="Node3D" unique_id=422498756]
 
 [node name="CanvasLayer" parent="." unique_id=1286912542 instance=ExtResource("1_usjl8")]
+
+[node name="Lamp" type="Node3D" parent="." unique_id=840252623]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 7, 4.065462, 9.486882)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Lamp" unique_id=1406672628]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+mesh = ExtResource("2_lpl7w")
+surface_material_override/0 = SubResource("ShaderMaterial_yf5fn")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Lamp" unique_id=328934088]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7138767, 0)
+light_color = Color(0.7219915, 0.68370044, 0.41761094, 1)
+light_energy = 3.198
+light_bake_mode = 1
+omni_range = 5.9445224
+
+[node name="Lamp2" type="Node3D" parent="." unique_id=1641408479]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -6.480384, 4.065462, 9.486882)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Lamp2" unique_id=2105058543]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+mesh = ExtResource("2_lpl7w")
+surface_material_override/0 = SubResource("ShaderMaterial_yf5fn")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Lamp2" unique_id=42020077]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7138767, 0)
+light_color = Color(0.7219915, 0.68370044, 0.41761094, 1)
+light_energy = 3.198
+light_bake_mode = 1
+omni_range = 5.9445224
+
+[node name="Lamp3" type="Node3D" parent="." unique_id=645002167]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -6.480384, 4.065462, -9.467647)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Lamp3" unique_id=801465545]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+mesh = ExtResource("2_lpl7w")
+surface_material_override/0 = SubResource("ShaderMaterial_yf5fn")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Lamp3" unique_id=430945682]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7138767, 0)
+light_color = Color(0.7219915, 0.68370044, 0.41761094, 1)
+light_energy = 3.198
+light_bake_mode = 1
+omni_range = 5.9445224
+
+[node name="Lamp4" type="Node3D" parent="." unique_id=62549176]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 7.1501684, 4.065462, -9.467647)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Lamp4" unique_id=986086490]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+mesh = ExtResource("2_lpl7w")
+surface_material_override/0 = SubResource("ShaderMaterial_yf5fn")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Lamp4" unique_id=24358022]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7138767, 0)
+light_color = Color(0.7219915, 0.68370044, 0.41761094, 1)
+light_energy = 3.198
+light_bake_mode = 1
+omni_range = 5.9445224
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1315787351]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
@@ -67,7 +140,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.310239, 0.66796875, -0.070
 shape = SubResource("BoxShape3D_g4v7s")
 
 [node name="CollisionShape3D5" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=200457925]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.02252171, -0.06422768, -0.070007324)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.028861737, -0.083179094, -0.06454468)
 shape = SubResource("BoxShape3D_usjl8")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1334049852]
@@ -78,9 +151,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=422185130]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24, 0)
-light_energy = 3.218
+light_energy = 1.997
 light_bake_mode = 1
-omni_range = 35.68502
+omni_range = 27.138535
 
 [node name="Node3D" parent="." unique_id=1203548267 instance=ExtResource("6_imbhg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.279909, 8.716499, -3.4847438)
@@ -101,3 +174,7 @@ speed = -2.0
 
 [node name="Node3D3" parent="." unique_id=789137947 instance=ExtResource("6_imbhg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.279909, 16.20331, 1.3711103)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1423169541]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.892296, 0)
+mesh = SubResource("BoxMesh_g4v7s")

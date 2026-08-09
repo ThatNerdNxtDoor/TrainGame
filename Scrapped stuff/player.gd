@@ -23,8 +23,10 @@ func _physics_process(delta: float) -> void:
 	cam_velocity = Vector2.ZERO
 	
 	
-		
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	if Input.is_action_pressed("ui_down"):
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	if Input.is_action_pressed("ui_up"):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	move_and_slide()
 	
 func _unhandled_input(event: InputEvent) -> void:

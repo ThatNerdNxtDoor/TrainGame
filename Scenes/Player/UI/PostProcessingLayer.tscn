@@ -4,7 +4,8 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lpl7w"]
 shader = ExtResource("1_dm4ce")
-shader_parameter/vin_strength = 0.75
+shader_parameter/burn_color = Color(0.99999994, 0.963919, 0.9668285, 1)
+shader_parameter/vin_strength = 0.6
 
 [node name="CanvasLayer" type="CanvasLayer" unique_id=1286912542]
 
@@ -23,6 +24,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -1.0
+offset_right = -1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
