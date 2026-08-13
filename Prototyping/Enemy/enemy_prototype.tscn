@@ -10,6 +10,7 @@
 radius = 5.0
 
 [node name="EnemyPrototype" type="CharacterBody3D" unique_id=722079134 node_paths=PackedStringArray("nav_agent", "nav_timer")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_mex8l")
 nav_agent = NodePath("NavigationAgent3D")
 nav_timer = NodePath("Timer")

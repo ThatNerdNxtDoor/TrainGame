@@ -85,7 +85,7 @@ var jump_factor : float = 1
 @export_group("Patrolling")
 
 ## Determines if the [param patrol_index] will start at a random index in the array. If False, it
-## will start from index 0.
+## will start from [param patrol_index].
 @export var random_start_index : bool = false
 
 ## An array of Vector3 points that the [param NavBehavior.PATROLLING] Nav Behavior uses. Each
@@ -93,8 +93,9 @@ var jump_factor : float = 1
 ## end of the array.
 @export var patrol_route : Array[Vector3] = [Vector3(0, 0, 0)]
 
-## The current destination index of the [param patrol_route].
-var patrol_index : int = 0
+## The current destination index of the [param patrol_route]. Can be set at export to
+## determine starting index if [param random_start_index] is false.
+@export var patrol_index : int = 0
 
 #---------------------------------------------------------------------------------------------------
 @export_group("Wandering")
@@ -264,11 +265,11 @@ func movement_calculation(delta):
 func _on_navigation_agent_3d_target_reached():
 	print("destination")
 	# If the Actor is patrolling and is not pursuing anything, then it should be stationary.
-	if nav_behavior == NavBehavior.PATROLLING && pursuit_entity == null:
+	if pursuit_entity == null:
 		nav_timer.start()
 	pass # Replace with function body.
 
-## 
+## Triggers when the Actor reaches a navigation link (ie jumping up to a platform or across a pit.
 func _on_navigation_link_reaced(details : Dictionary):
 	print("Link Reached")
 	pause_navigation = true
