@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://cdhebxj0oxb3b"]
+
+[ext_resource type="PackedScene" uid="uid://depdv5n53v0wg" path="res://Assets/BuildingRooms/Models/Room.glb" id="1_ufbx6"]
+
+[node name="Node3D" type="Node3D" unique_id=1105524888]
+
+[node name="Room" parent="." unique_id=1242280529 instance=ExtResource("1_ufbx6")]
+
+[node name="Start" type="Marker3D" parent="." unique_id=1576148439]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 0)
+
+[node name="End" type="Marker3D" parent="." unique_id=2018153558]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, 0)

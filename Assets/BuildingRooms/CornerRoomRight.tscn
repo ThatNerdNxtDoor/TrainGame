@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://cfrunhabuehye"]
+
+[ext_resource type="PackedScene" uid="uid://dlka2jukf2x7" path="res://Assets/BuildingRooms/Models/Corner_Bend_Room.glb" id="1_xwc40"]
+
+[node name="Node3D" type="Node3D" unique_id=1206130979]
+
+[node name="Corner_Bend_Room" parent="." unique_id=980325750 instance=ExtResource("1_xwc40")]
+
+[node name="Start" type="Marker3D" parent="." unique_id=1644254528]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.5)
+gizmo_extents = 0.5
+
+[node name="End" type="Marker3D" parent="." unique_id=405659458]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 0)
+gizmo_extents = 0.5

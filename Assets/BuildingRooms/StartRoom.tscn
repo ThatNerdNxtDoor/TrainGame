@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dcmpev1rnch0q"]
+
+[ext_resource type="PackedScene" uid="uid://dubojyd3raljn" path="res://Assets/BuildingRooms/Models/End_Room.glb" id="1_53fyu"]
+
+[node name="Node3D" type="Node3D" unique_id=811933285]
+
+[node name="End_Room" parent="." unique_id=67442311 instance=ExtResource("1_53fyu")]
+
+[node name="Start" type="Marker3D" parent="." unique_id=1375883350]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)

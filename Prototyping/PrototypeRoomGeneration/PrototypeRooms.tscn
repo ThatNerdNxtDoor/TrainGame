@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://ctrce01frpbh7"]
+
+[ext_resource type="Script" uid="uid://dwpqe7dovh3fm" path="res://Prototyping/PrototypeRoomGeneration/prototype_rooms.gd" id="1_26nhe"]
+
+[node name="PrototypeRooms" type="Node3D" unique_id=1520201278]
+script = ExtResource("1_26nhe")
