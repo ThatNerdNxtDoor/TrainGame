@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ekayvfo1h5t2"]
 
 [ext_resource type="Script" uid="uid://sdgk6o3lxeu" path="res://Prototyping/MainMenu/main_menu_ui.gd" id="1_2olex"]
+[ext_resource type="PackedScene" uid="uid://bnsu6dj12kcjq" path="res://Prototyping/MainMenu/settings_panel.tscn" id="2_8175v"]
 
 [node name="MainMenuSet" type="Node3D" unique_id=546341459]
 
@@ -19,14 +20,14 @@ script = ExtResource("1_2olex")
 [node name="RichTextLabel" type="RichTextLabel" parent="MainMenuUI" unique_id=1590536092]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.15400001
+anchor_left = 0.143
 anchor_top = 0.193
-anchor_right = 0.85600007
-anchor_bottom = 0.42000002
-offset_left = -0.40802002
+anchor_right = 0.845
+anchor_bottom = 0.381
+offset_left = 0.2639923
 offset_top = -0.06400299
-offset_right = -0.11206055
-offset_bottom = -0.16000366
+offset_right = 0.5599365
+offset_bottom = 0.11199951
 theme_override_font_sizes/normal_font_size = 80
 theme_override_font_sizes/bold_font_size = 80
 theme_override_font_sizes/bold_italics_font_size = 80
@@ -55,6 +56,7 @@ anchor_bottom = 1.0
 offset_right = -0.4222412
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 40
 theme_override_font_sizes/bold_font_size = 16
 theme_override_font_sizes/bold_italics_font_size = 16
@@ -85,6 +87,7 @@ anchor_bottom = 1.0
 offset_right = -0.4222412
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 40
 theme_override_font_sizes/bold_font_size = 16
 theme_override_font_sizes/bold_italics_font_size = 16
@@ -116,6 +119,7 @@ anchor_bottom = 1.0
 offset_right = -0.4222412
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 20
 theme_override_font_sizes/bold_font_size = 16
 theme_override_font_sizes/bold_italics_font_size = 16
@@ -127,65 +131,11 @@ text = "Quit
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SettingsPanel" type="Panel" parent="MainMenuUI" unique_id=1524470918]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.17500001
-anchor_top = 0.193
-anchor_right = 0.81600004
-anchor_bottom = 0.873
-offset_left = 0.3999939
-offset_top = -0.06400299
-offset_right = -0.032043457
-offset_bottom = 0.29595947
-
-[node name="TabContainer" type="TabContainer" parent="MainMenuUI/SettingsPanel" unique_id=906489699]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.001
-anchor_right = 1.0
-anchor_bottom = 0.90500003
-offset_left = 0.73800004
-offset_bottom = -0.10501099
-tab_alignment = 1
-current_tab = 0
-
-[node name="Video" type="Panel" parent="MainMenuUI/SettingsPanel/TabContainer" unique_id=1331893370]
-layout_mode = 2
-metadata/_tab_index = 0
-
-[node name="Audio" type="Panel" parent="MainMenuUI/SettingsPanel/TabContainer" unique_id=1925285939]
+[node name="SettingsPanel" parent="MainMenuUI" unique_id=1530413360 instance=ExtResource("2_8175v")]
 visible = false
-layout_mode = 2
-metadata/_tab_index = 1
-
-[node name="Controls" type="Panel" parent="MainMenuUI/SettingsPanel/TabContainer" unique_id=2098893287]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 2
-
-[node name="CancelChanges" type="Button" parent="MainMenuUI/SettingsPanel" unique_id=144786587]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.117000006
-anchor_top = 0.91600007
-anchor_right = 0.36
-anchor_bottom = 0.98600006
-offset_left = -0.3460083
-offset_top = 0.04397583
-offset_right = 0.3199768
-offset_bottom = -5.8260193
-text = "Cancel Changes"
+anchors_preset = 15
 
-[node name="SaveChanges" type="Button" parent="MainMenuUI/SettingsPanel" unique_id=781263040]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.643
-anchor_top = 0.91600007
-anchor_right = 0.88600004
-anchor_bottom = 0.98600006
-offset_left = -0.5339966
-offset_top = 0.04397583
-offset_right = 0.13195801
-offset_bottom = 0.17398071
-text = "Cancel Changes"
+[connection signal="pressed" from="MainMenuUI/StartButton" to="MainMenuUI" method="start_game"]
+[connection signal="pressed" from="MainMenuUI/SettingButton" to="MainMenuUI" method="open_settings"]
+[connection signal="pressed" from="MainMenuUI/QuitButton" to="MainMenuUI" method="close_game"]
