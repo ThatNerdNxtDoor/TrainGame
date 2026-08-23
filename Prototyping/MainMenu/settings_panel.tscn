@@ -22,10 +22,9 @@ anchor_bottom = 0.90500003
 offset_left = 0.73800004
 offset_bottom = -0.10501099
 tab_alignment = 1
-current_tab = 2
+current_tab = 0
 
 [node name="Video" type="Panel" parent="TabContainer" unique_id=1774122207]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -35,6 +34,7 @@ layout_mode = 2
 metadata/_tab_index = 1
 
 [node name="Controls" type="Panel" parent="TabContainer" unique_id=913648226]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
@@ -65,4 +65,4 @@ offset_bottom = 0.17398071
 text = "Save Changes"
 
 [connection signal="pressed" from="CancelChanges" to="." method="cancel_changes"]
-[connection signal="pressed" from="SaveChanges" to="." method="_on_save_changes_pressed"]
+[connection signal="pressed" from="SaveChanges" to="." method="_save_changes"]

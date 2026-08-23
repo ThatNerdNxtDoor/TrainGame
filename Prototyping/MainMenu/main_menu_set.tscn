@@ -135,6 +135,12 @@ vertical_alignment = 1
 visible = false
 layout_mode = 1
 anchors_preset = 15
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [connection signal="pressed" from="MainMenuUI/StartButton" to="MainMenuUI" method="start_game"]
 [connection signal="pressed" from="MainMenuUI/SettingButton" to="MainMenuUI" method="open_settings"]
