@@ -22,14 +22,14 @@ anchor_bottom = 0.90500003
 offset_left = 0.73800004
 offset_bottom = -0.10501099
 tab_alignment = 1
-current_tab = 0
+current_tab = 1
 
 [node name="Video" type="Panel" parent="TabContainer" unique_id=1774122207]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
 [node name="Audio" type="Panel" parent="TabContainer" unique_id=133840425]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 

@@ -19,7 +19,6 @@ func _ready():
 	#Load saved settings
 	var saved_settings = FileAccess.open(SETTINGS_FILE_PATH, FileAccess.READ)
 	GlobalSettings.current_settings = json.parse_string(saved_settings.get_as_text())
-	#TODO: Access settings to load saved settings.
 	saved_settings.close()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -41,8 +40,8 @@ func cancel_changes():
 func _save_changes():
 	var new_settings = FileAccess.open(SETTINGS_FILE_PATH, FileAccess.WRITE)
 	new_settings.store_line("{")
-	#TODO: Store collect default settings to store here.
-	#Using a group tag, can get every setting node and collect its value property.
+	for setting in GlobalSettings.current_settings.keys():
+		new_settings.store_line("\"" + setting + "\": " + GlobalSettings.current_settings[setting] + ",")
 	new_settings.store_line("}")
 	new_settings.close()
 	self.visible = false
@@ -52,6 +51,10 @@ func _save_changes():
 func _change_keybind(action, keybind):
 	pass
 
-##Changes a setting variable
+##Signal recieving function for when a setting value is changed. If the setting does not exist in
+## current_settings, it is created and inserted into the dictionary.
 func _change_setting(setting, value):
-	pass
+	if (GlobalSettings.current_settings.has(setting)):
+		GlobalSettings.current_settings[setting] = value
+	else:
+		GlobalSettings.current_settings.get_or_add(setting, value)

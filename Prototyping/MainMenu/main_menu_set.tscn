@@ -3,7 +3,21 @@
 [ext_resource type="Script" uid="uid://sdgk6o3lxeu" path="res://Prototyping/MainMenu/main_menu_ui.gd" id="1_2olex"]
 [ext_resource type="PackedScene" uid="uid://bnsu6dj12kcjq" path="res://Prototyping/MainMenu/settings_panel.tscn" id="2_8175v"]
 
+[sub_resource type="BoxMesh" id="BoxMesh_g4v7s"]
+
 [node name="MainMenuSet" type="Node3D" unique_id=546341459]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1995260270]
+transform = Transform3D(0.99999046, -0.00074553175, 0.0043026954, -0.0043668044, -0.1719234, 0.9851007, 5.324562e-06, -0.9851101, -0.17192501, 0, 0, 0)
+
+[node name="The cube" type="MeshInstance3D" parent="." unique_id=575576644]
+transform = Transform3D(0.3679999, 0.05658416, 0.28652018, -0.042238872, 0.46637195, -0.037852023, -0.28898355, 0.003889352, 0.3703957, -0.5222198, 0.10072392, 0)
+mesh = SubResource("BoxMesh_g4v7s")
+
+[node name="MusicStream" type="AudioStreamPlayer3D" parent="." unique_id=515250746]
+bus = &"Music"
+
+[node name="AudioListener3D" type="AudioListener3D" parent="." unique_id=874818695]
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1689917087]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.7160294)
@@ -33,7 +47,7 @@ theme_override_font_sizes/bold_font_size = 80
 theme_override_font_sizes/bold_italics_font_size = 80
 theme_override_font_sizes/italics_font_size = 80
 bbcode_enabled = true
-text = "[color=orange][i]Ouroborrail[/i][/color]"
+text = "[color=orange][i]TrainGame[/i][/color]"
 horizontal_alignment = 1
 
 [node name="StartButton" type="Button" parent="MainMenuUI" unique_id=227371313]
