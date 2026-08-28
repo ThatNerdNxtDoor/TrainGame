@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bnsu6dj12kcjq"]
 
-[ext_resource type="Script" uid="uid://bksush5sy6r80" path="res://Prototyping/MainMenu/settings_config.gd" id="1_edasp"]
+[ext_resource type="Script" uid="uid://bksush5sy6r80" path="res://Scripts/Player/UI/settings_config.gd" id="1_edasp"]
 
 [node name="SettingsPanel" type="Panel" unique_id=1530413360]
 anchors_preset = -1

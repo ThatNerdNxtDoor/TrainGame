@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ekayvfo1h5t2"]
 
-[ext_resource type="Script" uid="uid://sdgk6o3lxeu" path="res://Prototyping/MainMenu/main_menu_ui.gd" id="1_2olex"]
-[ext_resource type="PackedScene" uid="uid://bnsu6dj12kcjq" path="res://Prototyping/MainMenu/settings_panel.tscn" id="2_8175v"]
+[ext_resource type="Script" uid="uid://sdgk6o3lxeu" path="res://Scripts/Player/UI/main_menu_ui.gd" id="1_2olex"]
+[ext_resource type="PackedScene" uid="uid://bnsu6dj12kcjq" path="res://Scenes/Player/UI/settings_panel.tscn" id="2_8175v"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_g4v7s"]
 
