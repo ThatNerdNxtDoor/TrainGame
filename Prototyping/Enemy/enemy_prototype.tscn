@@ -25,6 +25,9 @@ mesh = SubResource("CapsuleMesh_g4v7s")
 shape = SubResource("CapsuleShape3D_g4v7s")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1155345860]
+path_postprocessing = 1
+avoidance_enabled = true
+neighbor_distance = 20.0
 
 [node name="Area3D" type="Area3D" parent="." unique_id=304547980]
 
