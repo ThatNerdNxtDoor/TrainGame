@@ -1,51 +1,104 @@
 extends Panel
 
-##System settings use a JSON system, so a helper class must be instantiated
-var json = JSON.new()
-##The const filepath used for accessing save data.
-const SETTINGS_FILE_PATH = "user://settings.json"
+@onready var resolution_option : OptionButton = $TabContainer/Video/GridContainer/ResolutionOption
+@onready var window_mode_option : OptionButton = $TabContainer/Video/GridContainer/WindowModeOption
+@onready var monitor_option : OptionButton = $TabContainer/Video/GridContainer/MonitorOption
+@onready var vsync_option : OptionButton = $TabContainer/Video/GridContainer/VsyncOption
+@onready var fps_option : OptionButton = $TabContainer/Video/GridContainer/FpsOption
+@onready var shadow_option : OptionButton = $TabContainer/Video/GridContainer/ShadowOption
+@onready var antialiasing_option : OptionButton = $TabContainer/Video/GridContainer/AntialiasingOption
+
+##Common resolution presets offered in the Resolution dropdown.
+const RESOLUTIONS : Array[Vector2i] = [
+	Vector2i(1280, 720),
+	Vector2i(1600, 900),
+	Vector2i(1920, 1080),
+	Vector2i(2560, 1440),
+	Vector2i(3840, 2160),
+]
+const WINDOW_MODES := ["windowed", "fullscreen", "borderless", "maximized"]
+const VSYNC_MODES := ["disabled", "enabled", "adaptive"]
+##Index 0 is treated as "Unlimited" (max_fps = 0) in the dropdown.
+const FPS_OPTIONS := [0, 30, 60, 90, 120, 144, 240]
+const SHADOW_QUALITIES := ["off", "low", "medium", "high"]
+const AA_OPTIONS := ["off", "2x", "4x", "8x"]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if (!FileAccess.file_exists(SETTINGS_FILE_PATH)): #Settings file does not exist, create a new one.
-		#Saving to a nonexistant file creates a new one.
-		var new_settings = FileAccess.open(SETTINGS_FILE_PATH, FileAccess.WRITE)
-		#The new settings file will inherit the default settings
-		new_settings.store_line("{")
-		for setting in GlobalSettings.DEFAULT_SETTINGS.keys():
-			new_settings.store_line("\"" + setting + "\": " + GlobalSettings.DEFAULT_SETTINGS[setting] + ",")
-		new_settings.store_line("}")
-		new_settings.close()
-	#Load saved settings
-	var saved_settings = FileAccess.open(SETTINGS_FILE_PATH, FileAccess.READ)
-	GlobalSettings.current_settings = json.parse_string(saved_settings.get_as_text())
-	saved_settings.close()
+	_populate_video_options()
+	_refresh_video_ui()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+##Fills every Video tab dropdown with its selectable options. Only needs to run once since
+## the options themselves (aside from monitor count) never change at runtime.
+func _populate_video_options():
+	resolution_option.clear()
+	for res in RESOLUTIONS:
+		resolution_option.add_item("%d x %d" % [res.x, res.y])
+
+	window_mode_option.clear()
+	window_mode_option.add_item("Windowed")
+	window_mode_option.add_item("Fullscreen")
+	window_mode_option.add_item("Borderless Fullscreen")
+	window_mode_option.add_item("Maximized")
+
+	monitor_option.clear()
+	for i in DisplayServer.get_screen_count():
+		monitor_option.add_item("Monitor %d" % (i + 1))
+
+	vsync_option.clear()
+	vsync_option.add_item("Off")
+	vsync_option.add_item("Enabled")
+	vsync_option.add_item("Adaptive")
+
+	fps_option.clear()
+	fps_option.add_item("Unlimited")
+	for fps in FPS_OPTIONS:
+		if (fps != 0):
+			fps_option.add_item(str(fps))
+
+	shadow_option.clear()
+	shadow_option.add_item("Off")
+	shadow_option.add_item("Low")
+	shadow_option.add_item("Medium")
+	shadow_option.add_item("High")
+
+	antialiasing_option.clear()
+	antialiasing_option.add_item("Off")
+	antialiasing_option.add_item("2x MSAA")
+	antialiasing_option.add_item("4x MSAA")
+	antialiasing_option.add_item("8x MSAA")
+
+##Selects the dropdown entry matching each value in GlobalSettings.current_settings. Called
+## on open and after cancelling so the UI never lies about what's actually applied.
+func _refresh_video_ui():
+	#int() is required since numbers round-tripped through JSON come back as float.
+	var resolution := Vector2i(
+		int(GlobalSettings._retrieve_setting("resolution_width")),
+		int(GlobalSettings._retrieve_setting("resolution_height"))
+	)
+	resolution_option.select(maxi(RESOLUTIONS.find(resolution), 0))
+
+	window_mode_option.select(maxi(WINDOW_MODES.find(GlobalSettings._retrieve_setting("window_mode")), 0))
+	monitor_option.select(clampi(int(GlobalSettings._retrieve_setting("target_monitor")), 0, monitor_option.item_count - 1))
+	vsync_option.select(maxi(VSYNC_MODES.find(GlobalSettings._retrieve_setting("vsync_mode")), 0))
+	fps_option.select(maxi(FPS_OPTIONS.find(int(GlobalSettings._retrieve_setting("max_fps"))), 0))
+	shadow_option.select(maxi(SHADOW_QUALITIES.find(GlobalSettings._retrieve_setting("shadow_quality")), 0))
+	antialiasing_option.select(maxi(AA_OPTIONS.find(GlobalSettings._retrieve_setting("antialiasing")), 0))
 
 ##Cancels any setting changes and reverts them to before the panel was opened,
 ## then closes the panel.
 func cancel_changes():
-	#Reloads and reapplies the settings from the parsed file
-	var saved_settings = FileAccess.open(SETTINGS_FILE_PATH, FileAccess.READ)
-	GlobalSettings.current_settings = json.parse_string(saved_settings.get_as_text())
-	saved_settings.close()
-	
+	GlobalSettings._load_settings()
+	GlobalSettings.apply_all_settings()
+	_refresh_video_ui()
+
 	self.visible = false
 
 ##Saves any setting changes made by overwriting previous settings,
 ## then closes the panel.
 func _save_changes():
-	var new_settings = FileAccess.open(SETTINGS_FILE_PATH, FileAccess.WRITE)
-	new_settings.store_line("{")
-	for setting in GlobalSettings.current_settings.keys():
-		new_settings.store_line("\"" + setting + "\": " + GlobalSettings.current_settings[setting] + ",")
-	new_settings.store_line("}")
-	new_settings.close()
+	GlobalSettings._save_settings()
 	self.visible = false
-	pass # Replace with function body.
 
 ##Switches keybindings for certain actions
 func _change_keybind(action, keybind):
@@ -58,3 +111,35 @@ func _change_setting(setting, value):
 		GlobalSettings.current_settings[setting] = value
 	else:
 		GlobalSettings.current_settings.get_or_add(setting, value)
+
+#===============================Video Signal Functions===============================#
+
+func _on_resolution_item_selected(index : int):
+	var res = RESOLUTIONS[index]
+	_change_setting("resolution_width", res.x)
+	_change_setting("resolution_height", res.y)
+	GlobalSettings.apply_display_settings()
+
+func _on_window_mode_item_selected(index : int):
+	_change_setting("window_mode", WINDOW_MODES[index])
+	GlobalSettings.apply_display_settings()
+
+func _on_monitor_item_selected(index : int):
+	_change_setting("target_monitor", index)
+	GlobalSettings.apply_display_settings()
+
+func _on_vsync_item_selected(index : int):
+	_change_setting("vsync_mode", VSYNC_MODES[index])
+	GlobalSettings.apply_display_settings()
+
+func _on_fps_item_selected(index : int):
+	_change_setting("max_fps", FPS_OPTIONS[index])
+	GlobalSettings.apply_display_settings()
+
+func _on_shadow_item_selected(index : int):
+	_change_setting("shadow_quality", SHADOW_QUALITIES[index])
+	GlobalSettings.apply_graphics_settings()
+
+func _on_antialiasing_item_selected(index : int):
+	_change_setting("antialiasing", AA_OPTIONS[index])
+	GlobalSettings.apply_graphics_settings()

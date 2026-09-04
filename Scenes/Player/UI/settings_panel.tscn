@@ -29,6 +29,75 @@ visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
+[node name="GridContainer" type="GridContainer" parent="TabContainer/Video" unique_id=401729831]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 2
+
+[node name="ResolutionLabel" type="Label" parent="TabContainer/Video/GridContainer" unique_id=401729832]
+layout_mode = 2
+text = "Resolution"
+
+[node name="ResolutionOption" type="OptionButton" parent="TabContainer/Video/GridContainer" unique_id=401729833]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="WindowModeLabel" type="Label" parent="TabContainer/Video/GridContainer" unique_id=401729834]
+layout_mode = 2
+text = "Window Mode"
+
+[node name="WindowModeOption" type="OptionButton" parent="TabContainer/Video/GridContainer" unique_id=401729835]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MonitorLabel" type="Label" parent="TabContainer/Video/GridContainer" unique_id=401729836]
+layout_mode = 2
+text = "Monitor"
+
+[node name="MonitorOption" type="OptionButton" parent="TabContainer/Video/GridContainer" unique_id=401729837]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VsyncLabel" type="Label" parent="TabContainer/Video/GridContainer" unique_id=401729838]
+layout_mode = 2
+text = "VSync"
+
+[node name="VsyncOption" type="OptionButton" parent="TabContainer/Video/GridContainer" unique_id=401729839]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="FpsLabel" type="Label" parent="TabContainer/Video/GridContainer" unique_id=401729840]
+layout_mode = 2
+text = "Max FPS"
+
+[node name="FpsOption" type="OptionButton" parent="TabContainer/Video/GridContainer" unique_id=401729841]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ShadowLabel" type="Label" parent="TabContainer/Video/GridContainer" unique_id=401729842]
+layout_mode = 2
+text = "Shadow Quality"
+
+[node name="ShadowOption" type="OptionButton" parent="TabContainer/Video/GridContainer" unique_id=401729843]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AntialiasingLabel" type="Label" parent="TabContainer/Video/GridContainer" unique_id=401729844]
+layout_mode = 2
+text = "Anti-Aliasing"
+
+[node name="AntialiasingOption" type="OptionButton" parent="TabContainer/Video/GridContainer" unique_id=401729845]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="Audio" type="Panel" parent="TabContainer" unique_id=133840425]
 layout_mode = 2
 metadata/_tab_index = 1
@@ -64,5 +133,12 @@ offset_right = 0.13195801
 offset_bottom = 0.17398071
 text = "Save Changes"
 
+[connection signal="item_selected" from="TabContainer/Video/GridContainer/ResolutionOption" to="." method="_on_resolution_item_selected"]
+[connection signal="item_selected" from="TabContainer/Video/GridContainer/WindowModeOption" to="." method="_on_window_mode_item_selected"]
+[connection signal="item_selected" from="TabContainer/Video/GridContainer/MonitorOption" to="." method="_on_monitor_item_selected"]
+[connection signal="item_selected" from="TabContainer/Video/GridContainer/VsyncOption" to="." method="_on_vsync_item_selected"]
+[connection signal="item_selected" from="TabContainer/Video/GridContainer/FpsOption" to="." method="_on_fps_item_selected"]
+[connection signal="item_selected" from="TabContainer/Video/GridContainer/ShadowOption" to="." method="_on_shadow_item_selected"]
+[connection signal="item_selected" from="TabContainer/Video/GridContainer/AntialiasingOption" to="." method="_on_antialiasing_item_selected"]
 [connection signal="pressed" from="CancelChanges" to="." method="cancel_changes"]
 [connection signal="pressed" from="SaveChanges" to="." method="_save_changes"]
