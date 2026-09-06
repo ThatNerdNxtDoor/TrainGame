@@ -120,6 +120,9 @@ var jump_factor : float = 1
 ## a null [param pursuit_entity] means the Actor has no reason to continue pursuing.
 var pursuit_entity : Node3D
 
+## The angle that the aggro check looks within to determine the viability of
+@export_range(0, 180) var aggro_angle : float = 70.0
+
 ## The distance the Actor will stay in from the target position. If the target comes closer than the
 ## engage distance, the Actor will back away to the intended distance. If
 @export var engage_distance : float = 4.0
@@ -149,11 +152,8 @@ func pursue(target : Node3D):
 	pursuit_entity = target
 	nav_timer.paused = true
 
-func actor_setup():
-	await get_tree().physics_frame
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
+## Performs universal setup for enemy components and signals.
+func enemy_actor_setup():
 	# Connect the navigation agent to its needed functions.
 	nav_agent.target_reached.connect(_on_navigation_agent_3d_target_reached)
 	nav_agent.link_reached.connect(_on_navigation_link_reaced)
@@ -170,7 +170,12 @@ func _ready():
 		aggro_area.body_entered.connect(_aggro_entered)
 	
 	# Wait for the physics frame in the scene to be initialized.
-	actor_setup.call_deferred()
+	await get_tree().physics_frame
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	#Prepare enemy components for use
+	enemy_actor_setup.call_deferred()
 	
 	print("starting nav")
 	#kick-off the navigation for relevant behavioral subsets
@@ -291,4 +296,19 @@ func _nav_timer_timeout():
 ## Triggers when a connected body or [Area3D] detects a valid target. When triggered, it activates
 ## pursuit mode.
 func _aggro_entered(body : Node3D):
-	pursue(body)
+	#First determine the angle from the enemy to the body to decide if a raycast can be shot.
+	var self_position = self.global_position
+	var body_position = body.global_position
+	var angle_to_body = rad_to_deg(self_position.dot(body_position))
+	if abs(angle_to_body) <= aggro_angle or abs(angle_to_body) >= 360 - aggro_angle:
+		#Create a raycast towards the body withing the aggro area
+		var space = get_world_3d().direct_space_state
+		var query = PhysicsRayQueryParameters3D.create(
+					self.global_position,
+					body.global_position)
+		query.exclude = [self]
+		var collision = space.intersect_ray(query)
+		#If there is a collision, check if it is a valid target
+		if collision:
+			if collision.collider.name == "Player": #TODO: Make the check look for the colliders collision layer instead of name
+				pursue(body)

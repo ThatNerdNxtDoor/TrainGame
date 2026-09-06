@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://ggvjv4s74yxy"]
+
+[ext_resource type="Script" uid="uid://dcl6d307a3ilq" path="res://Prototyping/Enemy/ranged_enemy_prototype.gd" id="1_vc2s5"]
+[ext_resource type="PackedScene" uid="uid://bquww5acljpd7" path="res://Prototyping/Enemy/enemy_projectile_prototype.tscn" id="2_10opw"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_vc2s5"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_10opw"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_jebim"]
+radius = 5.0
+
+[node name="ranged_enemy_prototype" type="CharacterBody3D" unique_id=471802683 node_paths=PackedStringArray("nav_agent", "nav_timer")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("1_vc2s5")
+projectile = ExtResource("2_10opw")
+nav_agent = NodePath("NavigationAgent3D")
+nav_timer = NodePath("Timer")
+metadata/_custom_type_script = "uid://c30ga2nn30ta8"
+
+[node name="Timer" type="Timer" parent="." unique_id=317246914]
+one_shot = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1924465348]
+mesh = SubResource("CapsuleMesh_vc2s5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1012868840]
+shape = SubResource("CapsuleShape3D_10opw")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=958736903]
+path_postprocessing = 1
+avoidance_enabled = true
+neighbor_distance = 20.0
+
+[node name="Area3D" type="Area3D" parent="." unique_id=312363033]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=654456018]
+shape = SubResource("SphereShape3D_jebim")
