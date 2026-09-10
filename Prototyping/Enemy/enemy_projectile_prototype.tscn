@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://bquww5acljpd7"]
+
+[ext_resource type="Script" uid="uid://bpeyg5vbuwkyv" path="res://Prototyping/Enemy/enemy_projectile_prototype.gd" id="1_oltts"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_g4v7s"]
+radius = 0.125
+height = 0.6508789
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g4v7s"]
+radius = 0.125
+height = 0.6508789
+
+[node name="enemy_projectile_prototype" type="RigidBody3D" unique_id=1831185919 node_paths=PackedStringArray("collision_box", "projectile_mesh")]
+mass = 0.1
+script = ExtResource("1_oltts")
+collision_box = NodePath("CollisionShape3D")
+projectile_mesh = NodePath("MeshInstance3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=911331791]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_g4v7s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1316155561]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_g4v7s")
