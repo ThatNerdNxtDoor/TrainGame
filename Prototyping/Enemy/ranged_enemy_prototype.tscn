@@ -10,16 +10,22 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_jebim"]
 radius = 5.0
 
-[node name="ranged_enemy_prototype" type="CharacterBody3D" unique_id=471802683 node_paths=PackedStringArray("nav_agent", "nav_timer")]
+[node name="ranged_enemy_prototype" type="CharacterBody3D" unique_id=471802683 node_paths=PackedStringArray("proj_timer", "nav_agent", "nav_timer", "aggro_area")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_vc2s5")
 projectile = ExtResource("2_10opw")
+proj_timer = NodePath("ProjectileTimer")
+nav_behavior = 2
 nav_agent = NodePath("NavigationAgent3D")
-nav_timer = NodePath("Timer")
+nav_timer = NodePath("NavigationTimer")
+aggro_area = NodePath("Area3D")
+pursuit_distance = 20.0
 metadata/_custom_type_script = "uid://c30ga2nn30ta8"
 
-[node name="Timer" type="Timer" parent="." unique_id=317246914]
+[node name="NavigationTimer" type="Timer" parent="." unique_id=317246914]
 one_shot = true
+
+[node name="ProjectileTimer" type="Timer" parent="." unique_id=96018202]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1924465348]
 mesh = SubResource("CapsuleMesh_vc2s5")

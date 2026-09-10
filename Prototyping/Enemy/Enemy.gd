@@ -144,6 +144,8 @@ func set_target_position(target_pos : Vector3):
 ## To function, it is best to have a [CollisionShape3D] to call the function when a valid target enters
 ## it.
 func pursue(target : Node3D):
+	#TODO: Change pursuing to have an aggro variable to decide what the enemy should be fighting when
+	#	when against multiple opponents.
 	# If it is not already pursuing something else, then it will save where it was originally going
 	# so that it can return there when the pursuit is over.
 	if pursuit_entity == null:
@@ -172,13 +174,8 @@ func enemy_actor_setup():
 	# Wait for the physics frame in the scene to be initialized.
 	await get_tree().physics_frame
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	#Prepare enemy components for use
-	enemy_actor_setup.call_deferred()
-	
-	print("starting nav")
-	#kick-off the navigation for relevant behavioral subsets
+##Begins the navigation by giving an initial target.
+func enemy_start_navigation():
 	match(nav_behavior):
 		NavBehavior.WANDERING:
 			( set_target_position(Vector3(anchor_point.x + randf_range(-wander_range, wander_range),
@@ -186,7 +183,12 @@ func _ready():
 			nav_timer.start()
 		NavBehavior.PATROLLING:
 			set_target_position(patrol_route[randi_range(0, patrol_route.size() - 1) if random_start_index else 0])
-	print(nav_agent.target_position)
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	#Prepare enemy components for use
+	enemy_actor_setup.call_deferred()
+	enemy_start_navigation()
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
