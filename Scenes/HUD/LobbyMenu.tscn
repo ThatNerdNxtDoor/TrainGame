@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://dtn28kn4v1k7o"]
+
+[ext_resource type="Script" uid="uid://dohnbaqi0ux4" path="res://Scenes/HUD/lobby_menu.gd" id="1_xkiii"]
+
+[node name="Control" type="Control" unique_id=2083630728]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xkiii")
+
+[node name="Panel" type="Panel" parent="." unique_id=14928839]
+layout_mode = 0
+offset_right = 284.0
+offset_bottom = 300.0
+
+[node name="Create Lobby Button" type="Button" parent="Panel" unique_id=2002618643]
+layout_mode = 0
+offset_right = 175.0
+offset_bottom = 45.0
+text = "Create Lobby
+"
+
+[node name="Join Lobby Button" type="Button" parent="Panel" unique_id=2132943381]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 71.0
+offset_right = 178.0
+offset_bottom = 116.0
+text = "Join Lobby
+
+"
+
+[node name="Disconnect Button" type="Button" parent="Panel" unique_id=1643765329]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 137.0
+offset_right = 178.0
+offset_bottom = 182.0
+text = "Disconnect"
+
+[connection signal="pressed" from="Panel/Create Lobby Button" to="." method="create_game"]
