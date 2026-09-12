@@ -10,8 +10,13 @@ func create_game():
 	pass
 	
 func connect_to_game():
+	NetworkManager.join_server();
 	pass
 	
 func disconnect_game():
 	NetworkManager.disconnect_from_lobby()
+	pass
+	
+func ping ():
+	NetworkManager.check_connection_lcl()
 	pass

@@ -28,14 +28,27 @@ func create_server():
 	multiplayer.multiplayer_peer = peer;
 
 func disconnect_from_lobby ():
-	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new();
+	var peer = OfflineMultiplayerPeer.new();
+	multiplayer.multiplayer_peer = peer;
+	print("Disconnected")
 	
-func join_server(ip: String):
+func join_server(ip: String = DEFAULT_IP):
 	var peer = ENetMultiplayerPeer.new();
-	peer.create_client(DEFAULT_IP, PORT);
-	pass
+	var error = peer.create_client(DEFAULT_IP, PORT);
+	print(error)
+	multiplayer.multiplayer_peer = peer;
+	pass 
 
 func on_disconnected(id: int):
 	player_disconnected.emit(id);
 	
+	pass
+
+func check_connection_lcl ():
+	check_connection_remote.rpc();
+	pass
+
+@rpc("any_peer", "call_local", "reliable")	
+func check_connection_remote ():
+	print("is server", multiplayer.is_server())
 	pass

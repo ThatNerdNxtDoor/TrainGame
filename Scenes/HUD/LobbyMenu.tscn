@@ -41,4 +41,16 @@ offset_right = 178.0
 offset_bottom = 182.0
 text = "Disconnect"
 
+[node name="Ping" type="Button" parent="Panel" unique_id=657229794]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 203.0
+offset_right = 178.0
+offset_bottom = 248.0
+text = "Ping
+"
+
 [connection signal="pressed" from="Panel/Create Lobby Button" to="." method="create_game"]
+[connection signal="pressed" from="Panel/Join Lobby Button" to="." method="connect_to_game"]
+[connection signal="pressed" from="Panel/Disconnect Button" to="." method="disconnect_game"]
+[connection signal="pressed" from="Panel/Ping" to="." method="ping"]
