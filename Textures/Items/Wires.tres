@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bngqvqrughgfe"]
+
+[ext_resource type="Script" uid="uid://bq8xvodag7gb0" path="res://Scripts/Inventory/ItemData.gd" id="1_1fd5n"]
+
+[resource]
+script = ExtResource("1_1fd5n")
+item_name = "Wires"
+item_id = "wires"
+max_stack = 16
+metadata/_custom_type_script = "uid://bq8xvodag7gb0"
