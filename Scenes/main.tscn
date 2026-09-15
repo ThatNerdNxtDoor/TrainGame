@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://bqkfqdpe37y3c"]
 
 [ext_resource type="PackedScene" uid="uid://cug0ih5ou71if" path="res://Scenes/player.tscn" id="1_jjgbg"]
+[ext_resource type="PackedScene" uid="uid://b8l10ycijasy1" path="res://Scenes/scrap.tscn" id="2_bo1nx"]
+[ext_resource type="Resource" uid="uid://bcc5rki10ws76" path="res://Resources/Items/Scrap.tres" id="3_jjvhh"]
+[ext_resource type="Resource" uid="uid://ce2shn10bxm6" path="res://Resources/Items/Metal.tres" id="4_kry3j"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jjgbg"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -55,3 +58,27 @@ size = Vector3(6.993042, 1.4682617, 7.660034)
 [node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1683621527]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.282536, 1.5432839, -6.642847)
 size = Vector3(5.380188, 3.03479, 7.660034)
+
+[node name="Scrap" parent="." unique_id=251073760 instance=ExtResource("2_bo1nx")]
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, -3.9853106, 1.7544985, 2.928956)
+item = ExtResource("3_jjvhh")
+
+[node name="Scrap2" parent="." unique_id=1570924983 instance=ExtResource("2_bo1nx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.0839977, 0.99168295, 10.625011)
+item = ExtResource("3_jjvhh")
+amount = 40
+
+[node name="Scrap3" parent="." unique_id=343454434 instance=ExtResource("2_bo1nx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.433348, 0.99168295, 16.713982)
+item = ExtResource("3_jjvhh")
+amount = 80
+
+[node name="Scrap4" parent="." unique_id=135676167 instance=ExtResource("2_bo1nx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5762701, 0.99168295, 11.18596)
+item = ExtResource("4_kry3j")
+amount = 20
+
+[node name="Scrap5" parent="." unique_id=975116494 instance=ExtResource("2_bo1nx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0067472, 0.99168295, 6.4394484)
+item = ExtResource("4_kry3j")
+amount = 200
