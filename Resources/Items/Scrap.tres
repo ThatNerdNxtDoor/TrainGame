@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bcc5rki10ws76"]
+
+[ext_resource type="Texture2D" uid="uid://c4qnxfew1emik" path="res://Textures/Scrap.png" id="1_lslte"]
+[ext_resource type="Script" uid="uid://bq8xvodag7gb0" path="res://Scripts/Inventory/ItemData.gd" id="1_nvgg2"]
+
+[resource]
+script = ExtResource("1_nvgg2")
+item_name = "Scrap"
+item_id = "scrap"
+max_stack = 64
+icon = ExtResource("1_lslte")
+metadata/_custom_type_script = "uid://bq8xvodag7gb0"
