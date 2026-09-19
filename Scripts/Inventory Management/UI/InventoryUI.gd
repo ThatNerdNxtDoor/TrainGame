@@ -19,7 +19,7 @@ func _ready() -> void:
 	inventory.inventory_changed.connect(update_inventory)
 
 	# Load the inventory slot scene
-	slot_scene = preload("res://Scenes/UI/InventorSlotUI.tscn")
+	slot_scene = preload("res://Scenes/UI/InventorySlotUI.tscn")
 
 	# Create the inventory slots
 	create_slots()
