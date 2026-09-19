@@ -17,6 +17,9 @@ extends Node
 # Array containing all inventory slots
 var slots: Array[InventorySlot] = []
 
+# Add a signal tp update the UI when the inventory changed
+signal inventory_changed
+
 
 # ============================================================
 # READY
@@ -86,7 +89,7 @@ func add_item(item: ItemData, amount: int) -> int:
 
 		# Everything was added
 		if remaining <= 0:
-
+			inventory_changed.emit()
 			return 0
 
 
@@ -122,7 +125,7 @@ func add_item(item: ItemData, amount: int) -> int:
 
 		# Everything was added
 		if remaining <= 0:
-
+			inventory_changed.emit()
 			return 0
 
 
@@ -245,3 +248,34 @@ func clear_inventory() -> void:
 
 		slot.item = null
 		slot.quantity = 0
+		
+		
+# For Debugging and verifying of the inventory
+func print_inventory() -> void:
+
+	print("")
+	print("========== INVENTORY ==========")
+
+	for i in range(slots.size()):
+
+		var slot: InventorySlot = slots[i]
+
+		if slot.is_empty():
+
+			print("[", i, "] Empty")
+
+		else:
+
+			print(
+				"[",
+				i,
+				"] ",
+				slot.item.item_name,
+				" x",
+				slot.quantity,
+				"/",
+				slot.item.max_stack
+			)
+
+	print("===============================")
+	print("")
