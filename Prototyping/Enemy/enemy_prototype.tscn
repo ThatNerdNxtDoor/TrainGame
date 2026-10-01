@@ -11,7 +11,9 @@ radius = 5.0
 
 [node name="EnemyPrototype" type="CharacterBody3D" unique_id=722079134 node_paths=PackedStringArray("nav_agent", "nav_timer")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+safe_margin = 0.01
 script = ExtResource("1_mex8l")
+nav_behavior = 2
 nav_agent = NodePath("NavigationAgent3D")
 nav_timer = NodePath("Timer")
 
@@ -27,7 +29,7 @@ shape = SubResource("CapsuleShape3D_g4v7s")
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1155345860]
 path_postprocessing = 1
 avoidance_enabled = true
-neighbor_distance = 20.0
+neighbor_distance = 10.0
 
 [node name="Area3D" type="Area3D" parent="." unique_id=304547980]
 

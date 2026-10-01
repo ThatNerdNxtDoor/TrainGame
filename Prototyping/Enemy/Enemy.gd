@@ -201,6 +201,7 @@ func _physics_process(delta):
 	
 	if !pause_navigation:
 		behavior_calculation()
+	nav_agent.is_target_reachable()
 	movement_calculation(delta)
 	move_and_slide()
 
@@ -249,8 +250,10 @@ func movement_calculation(delta):
 		# normalized x and z vector.
 		var next_path_pos_flattened : Vector3 = Vector3(next_path_position.x, current_actor_position.y, next_path_position.z)
 		
-		# The Actor is made to face the direction it will move in.
-		self.look_at(next_path_pos_flattened)
+		# The Actor is made to face the direction it will move in. If it is at its destination, it
+		#  will not look because it connot look into its own position.
+		if (self.position == next_path_position):
+			self.look_at(next_path_pos_flattened)
 		if vel_clamp:
 			velocity.x = current_actor_position.direction_to(next_path_pos_flattened).x * (movement_speed)
 			velocity.z = current_actor_position.direction_to(next_path_pos_flattened).z * (movement_speed)

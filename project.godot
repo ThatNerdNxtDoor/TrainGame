@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
+[global_group]
+
+WaveSpawner="An origin point for spawning a wave. Ideally they are randomly generated and assigned to rooms. Player proximity and excessive enemies should deactivate the spawner for balance and to avoid complications"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

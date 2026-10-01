@@ -12,6 +12,7 @@ radius = 5.0
 
 [node name="ranged_enemy_prototype" type="CharacterBody3D" unique_id=471802683 node_paths=PackedStringArray("proj_timer", "nav_agent", "nav_timer", "aggro_area")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+safe_margin = 0.01
 script = ExtResource("1_vc2s5")
 projectile = ExtResource("2_10opw")
 proj_timer = NodePath("ProjectileTimer")
@@ -36,7 +37,7 @@ shape = SubResource("CapsuleShape3D_10opw")
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=958736903]
 path_postprocessing = 1
 avoidance_enabled = true
-neighbor_distance = 20.0
+neighbor_distance = 10.0
 
 [node name="Area3D" type="Area3D" parent="." unique_id=312363033]
 
