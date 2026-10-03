@@ -7,10 +7,13 @@ const PORT = 7000;
 const DEFAULT_IP = "127.0.0.1"
 
 signal player_connected (id: int);
-signal player_disconnected(id: int)
+signal player_disconnected(id: int);
+
+var player_ids: PackedInt32Array = PackedInt32Array();
 
 func _ready() -> void:
 	multiplayer.peer_disconnected.connect(on_disconnected)
+	multiplayer.peer_connected.connect(on_connected)
 	pass # Replace with function body.
 
 
@@ -30,6 +33,7 @@ func create_server():
 func disconnect_from_lobby ():
 	var peer = OfflineMultiplayerPeer.new();
 	multiplayer.multiplayer_peer = peer;
+	player_ids.clear();
 	print("Disconnected")
 	
 func join_server(ip: String = DEFAULT_IP):
@@ -39,10 +43,7 @@ func join_server(ip: String = DEFAULT_IP):
 	multiplayer.multiplayer_peer = peer;
 	pass 
 
-func on_disconnected(id: int):
-	player_disconnected.emit(id);
-	
-	pass
+
 
 func check_connection_lcl ():
 	check_connection_remote.rpc();
@@ -50,5 +51,27 @@ func check_connection_lcl ():
 
 @rpc("any_peer", "call_local", "reliable")	
 func check_connection_remote ():
-	print("is server", multiplayer.is_server())
+	print("is server ", multiplayer.is_server(), " id ", multiplayer.get_unique_id())
 	pass
+	
+func on_disconnected(id: int):
+	#player_disconnected.emit(id);
+	player_ids.erase(id);
+	print(id, " disconnected")
+	pass
+
+func on_connected(id: int):
+	player_ids.append(id);
+	print(id, " connected")
+	print_ids()
+	pass
+
+@rpc("any_peer", "call_local", "reliable")
+func load_level(level_name: String):
+	print(multiplayer.get_unique_id())
+	get_tree().change_scene_to_file(level_name)
+
+func print_ids():
+	if multiplayer.is_server():
+		for i in range(len(player_ids)):
+			print(player_ids[i])

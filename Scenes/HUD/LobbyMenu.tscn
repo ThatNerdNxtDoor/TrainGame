@@ -50,7 +50,15 @@ offset_bottom = 248.0
 text = "Ping
 "
 
+[node name="Ping2" type="Button" parent="Panel" unique_id=2126848302]
+layout_mode = 0
+offset_top = 280.0
+offset_right = 175.0
+offset_bottom = 325.0
+text = "LoadLevel"
+
 [connection signal="pressed" from="Panel/Create Lobby Button" to="." method="create_game"]
 [connection signal="pressed" from="Panel/Join Lobby Button" to="." method="connect_to_game"]
 [connection signal="pressed" from="Panel/Disconnect Button" to="." method="disconnect_game"]
 [connection signal="pressed" from="Panel/Ping" to="." method="ping"]
+[connection signal="pressed" from="Panel/Ping2" to="." method="load_level"]
