@@ -11,12 +11,14 @@ config_version=5
 [application]
 
 config/name="TrainGame"
+run/main_scene="uid://ekayvfo1h5t2"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 NetworkManager="*uid://d2pxeg4hjhyhc"
+GlobalSettings="*uid://dcrjf32pycvja"
 
 [display]
 

@@ -1,0 +1,161 @@
+[gd_scene format=3 uid="uid://ekayvfo1h5t2"]
+
+[ext_resource type="Script" uid="uid://sdgk6o3lxeu" path="res://Scripts/Player/UI/main_menu_ui.gd" id="1_2olex"]
+[ext_resource type="PackedScene" uid="uid://bnsu6dj12kcjq" path="res://Scenes/Player/UI/settings_panel.tscn" id="2_8175v"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_g4v7s"]
+
+[node name="MainMenuSet" type="Node3D" unique_id=546341459]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1995260270]
+transform = Transform3D(0.99999046, -0.00074553175, 0.0043026954, -0.0043668044, -0.1719234, 0.9851007, 5.324562e-06, -0.9851101, -0.17192501, 0, 0, 0)
+
+[node name="The cube" type="MeshInstance3D" parent="." unique_id=575576644]
+transform = Transform3D(0.3679999, 0.05658416, 0.28652018, -0.042238872, 0.46637195, -0.037852023, -0.28898355, 0.003889352, 0.3703957, -0.5222198, 0.10072392, 0)
+mesh = SubResource("BoxMesh_g4v7s")
+
+[node name="MusicStream" type="AudioStreamPlayer3D" parent="." unique_id=515250746]
+bus = &"Music"
+
+[node name="AudioListener3D" type="AudioListener3D" parent="." unique_id=874818695]
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1689917087]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.7160294)
+
+[node name="MainMenuUI" type="Control" parent="." unique_id=429363936]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2olex")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MainMenuUI" unique_id=1590536092]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.143
+anchor_top = 0.193
+anchor_right = 0.845
+anchor_bottom = 0.381
+offset_left = 0.2639923
+offset_top = -0.06400299
+offset_right = 0.5599365
+offset_bottom = 0.11199951
+theme_override_font_sizes/normal_font_size = 80
+theme_override_font_sizes/bold_font_size = 80
+theme_override_font_sizes/bold_italics_font_size = 80
+theme_override_font_sizes/italics_font_size = 80
+bbcode_enabled = true
+text = "[color=orange][i]TrainGame[/i][/color]"
+horizontal_alignment = 1
+
+[node name="StartButton" type="Button" parent="MainMenuUI" unique_id=227371313]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.455
+anchor_right = 0.587
+anchor_bottom = 0.58000004
+offset_left = 0.19998169
+offset_top = 0.16000366
+offset_right = 0.19824219
+offset_bottom = 0.15997314
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MainMenuUI/StartButton" unique_id=2140420732]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -0.4222412
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 40
+theme_override_font_sizes/bold_font_size = 16
+theme_override_font_sizes/bold_italics_font_size = 16
+theme_override_font_sizes/italics_font_size = 16
+theme_override_font_sizes/mono_font_size = 16
+bbcode_enabled = true
+text = "Play"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SettingButton" type="Button" parent="MainMenuUI" unique_id=2118002251]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.64400005
+anchor_right = 0.587
+anchor_bottom = 0.76900005
+offset_left = 0.19998169
+offset_top = -0.31204224
+offset_right = 0.19824219
+offset_bottom = -0.31204224
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MainMenuUI/SettingButton" unique_id=1373217000]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -0.4222412
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 40
+theme_override_font_sizes/bold_font_size = 16
+theme_override_font_sizes/bold_italics_font_size = 16
+theme_override_font_sizes/italics_font_size = 16
+theme_override_font_sizes/mono_font_size = 16
+bbcode_enabled = true
+text = "Settings
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="QuitButton" type="Button" parent="MainMenuUI" unique_id=1972394543]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.049000002
+anchor_top = 0.87700003
+anchor_right = 0.18200001
+anchor_bottom = 0.94900006
+offset_left = -0.44800186
+offset_top = -0.2960205
+offset_right = 0.33598328
+offset_bottom = 0.047973633
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MainMenuUI/QuitButton" unique_id=814397802]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -0.4222412
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 16
+theme_override_font_sizes/bold_italics_font_size = 16
+theme_override_font_sizes/italics_font_size = 16
+theme_override_font_sizes/mono_font_size = 16
+bbcode_enabled = true
+text = "Quit
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SettingsPanel" parent="MainMenuUI" unique_id=1530413360 instance=ExtResource("2_8175v")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="pressed" from="MainMenuUI/StartButton" to="MainMenuUI" method="start_game"]
+[connection signal="pressed" from="MainMenuUI/SettingButton" to="MainMenuUI" method="open_settings"]
+[connection signal="pressed" from="MainMenuUI/QuitButton" to="MainMenuUI" method="close_game"]
