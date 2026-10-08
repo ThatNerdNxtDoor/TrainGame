@@ -12,6 +12,7 @@ radius = 5.0
 
 [node name="ranged_enemy_prototype" type="CharacterBody3D" unique_id=471802683 node_paths=PackedStringArray("proj_timer", "nav_agent", "nav_timer", "aggro_area")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+collision_layer = 17
 safe_margin = 0.01
 script = ExtResource("1_vc2s5")
 projectile = ExtResource("2_10opw")

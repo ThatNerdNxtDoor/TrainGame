@@ -1,6 +1,7 @@
 extends Node3D
+class_name SpawnerPoint
 
-##TODO: Maybe change these arrays into a single array of of arrays or external data to save space.
+##TODO: Maybe change these arrays into a single array of arrays/dictionary or external data to save space.
 ##TODO: Maybe code some enemies to spawn in groups with configurable numbers.
 
 ##An array of packed scene for enemies that the spawner can choose from when deciding what to spawn.
@@ -34,6 +35,9 @@ func _spawn_wave():
 	var spawn_points = get_tree().get_nodes_in_group(spawner_group)
 	#Divy out enemies across the spawn locations
 	for point in spawn_points:
+		#Check the spawn to see if if condition prevent it from spawning enemies (too many / player near)
+		if (!validate_spawn(point)):
+			continue
 		#Set a standing budget for each point
 		var temp_budget = wave_budget
 		while temp_budget > 0:
@@ -46,3 +50,23 @@ func _spawn_wave():
 					spawned_enemy.position = point.position + Vector3(randf_range(-3, 3), 0, randf_range(-3, 3))
 					get_tree().root.add_child(spawned_enemy)
 					temp_budget -= spawn_pool_cost[index]
+
+##Uses the spawn point to run a shapecast check to see if there are any players nearby or if there are
+##	too many enemies nearby.
+func validate_spawn(point):
+	#Create a sphere to do a spawn check to determine if there are too many entities to spawn more.
+	var spawn_check = ShapeCast3D.new()
+	spawn_check.shape = SphereShape3D.new()
+	spawn_check.shape.radius = 8
+	#Set the collision mask to only read for enemy entities.
+	spawn_check.set_collision_mask_value(1, false)
+	spawn_check.set_collision_mask_value(5, true)
+	point.add_child(spawn_check)
+	spawn_check.force_shapecast_update()
+	var spawn_count = spawn_check.get_collision_count()
+	print(spawn_count)
+	spawn_check.queue_free()
+	if (spawn_count >= 8): #If there are too many enemies nearby, don't spawn anymore.
+		return false
+	else:
+		return true

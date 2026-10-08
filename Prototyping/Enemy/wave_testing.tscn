@@ -37,7 +37,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21770966, 6.319031)
 
 [node name="Timer" type="Timer" parent="." unique_id=966718798]
 wait_time = 10.0
-one_shot = true
 autostart = true
 
 [node name="WaveNodes" type="Node" parent="." unique_id=1900809816]
