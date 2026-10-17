@@ -9,26 +9,32 @@ extends Panel
 @onready var antialiasing_option : OptionButton = $TabContainer/Video/GridContainer/AntialiasingOption
 
 ##Common resolution presets offered in the Resolution dropdown.
+## Can consider generating these for future-proofing and non-standard resolution support. After all, some people play on a 16:10 screen like the Steam Deck's 1280 * 800 screen. 
 const RESOLUTIONS : Array[Vector2i] = [
-	Vector2i(1280, 720),
-	Vector2i(1600, 900),
-	Vector2i(1920, 1080),
-	Vector2i(2560, 1440),
-	Vector2i(3840, 2160),
+	Vector2i(16, 9), # Hmmm
+	Vector2i(1280, 720), # 720p for really low end devices or simply devices with low resolutions. 
+	Vector2i(1600, 900), # 900p for funsies
+	Vector2i(1920, 1080), # 1080p
+	Vector2i(2560, 1440), # 1440p
+	Vector2i(3840, 2160), # 4K 
 ]
 const WINDOW_MODES := ["windowed", "fullscreen", "borderless", "maximized"]
 const VSYNC_MODES := ["disabled", "enabled", "adaptive"]
 ##Index 0 is treated as "Unlimited" (max_fps = 0) in the dropdown.
-const FPS_OPTIONS := [0, 30, 60, 90, 120, 144, 240]
+const FPS_OPTIONS := [0, 30, 60, 90, 120, 144, 240] # We should also consider generating these based on what the monitor reports it can do (or GPU)? Some GPUs, for instance, may not have the bandwidth for certain resolution and framerates combinations. 
+# Even if a GTX 980ti had the performance to run our game at 8K 60fps (which it doesn't, but bare with me), it wouldn't have the port bandwidth to support that. Newer GPUs often DO have that support. 
 const SHADOW_QUALITIES := ["off", "low", "medium", "high"]
-const AA_OPTIONS := ["off", "2x", "4x", "8x"]
+const AA_OPTIONS := ["off", "2x", "4x", "8x"] # This refers to Multi Sample Anti-Aliasing, or MSAA. I believe we should support Temporal Anti-Aliasing (TAA) as well
+# Temporal Anti-Aliasing has a very small performance hit compared to MSAA and is far better at handling all aliasing at the expense of some blur. 
+# Better techniques, like DLSS, can also be considered both for their performance gains when upscaling and for their clarity when compared to TAA. 
+# 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_populate_video_options()
 	_refresh_video_ui()
 
-##Fills every Video tab dropdown with its selectable options. Only needs to run once since
+## Fills every Video tab dropdown with its selectable options. Only needs to run once since
 ## the options themselves (aside from monitor count) never change at runtime.
 func _populate_video_options():
 	resolution_option.clear()
@@ -71,7 +77,7 @@ func _populate_video_options():
 ##Selects the dropdown entry matching each value in GlobalSettings.current_settings. Called
 ## on open and after cancelling so the UI never lies about what's actually applied.
 func _refresh_video_ui():
-	#int() is required since numbers round-tripped through JSON come back as float.
+	#int() is required since numbers round-tripped through JSON come back as float, according to research. Can you verify this, Isaiah, if you see this?
 	var resolution := Vector2i(
 		int(GlobalSettings._retrieve_setting("resolution_width")),
 		int(GlobalSettings._retrieve_setting("resolution_height"))

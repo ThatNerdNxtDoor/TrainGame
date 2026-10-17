@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dyird7m0gisjg"]
+
+[ext_resource type="Script" uid="uid://bh0tl2fg1uvyb" path="res://Scenes/TrainTest2/train_car.gd" id="1_g8vng"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_yf5fn"]
+size = Vector3(5, 1, 14)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yf5fn"]
+size = Vector3(5, 1, 14)
+
+[node name="TrainCar" type="AnimatableBody3D" unique_id=19321220]
+script = ExtResource("1_g8vng")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=519071580]
+mesh = SubResource("BoxMesh_yf5fn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1544996821]
+shape = SubResource("BoxShape3D_yf5fn")

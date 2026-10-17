@@ -21,6 +21,10 @@ GlobalSettings="*uid://dcrjf32pycvja"
 
 [display]
 
+window/size/viewport_width=2560
+window/size/viewport_height=1440
+window/size/mode=3
+window/hdr/request_hdr_output=true
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 

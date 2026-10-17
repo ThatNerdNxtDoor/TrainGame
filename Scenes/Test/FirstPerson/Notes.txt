@@ -1,0 +1,32 @@
+As I learn, I am keeping a text file for what I am doing and how. It may be a little messy, but that's alright. 
+
+Using a Path3D. A designer draws a path by clicking points in the viewport and dragging handles to curve them. This is relatively easy to edit. 
+I have also added a PathFollow3D - this node must be a child of Path3D. This will ride along the Path3D curve. 
+AnimatableBody3D: this will be a child of PathFollow3D and will be the platform that the player will stand on. This will include its mesh and collision shape. 
+
+Finally, there is a short script on the PathFollow3D that will advance it along the curve it is a child of - this will happen over time. 
+
+Notes on Path3D Buttons: Select Points moves a point's position, Select Control Points will grab the in/out tangent handles that shape curve smoothness, and Select Tilt Handles
+controls the banking / rolling of the curve, kinda like how a roller coaster will bank on turns. Useful. 
+
+How to create a path:
+	When you click Path3D_TrainTrackPath, a new toolbar will appear above the viewport with various buttons. One of the buttons will allow you to add points that will make up the path. 
+	Just click on the button and then somewhere in the scene to place a point. Note that the elevation of each point may not match unless you swap to a certain 
+	orthographic view to prevent that from happening. 
+	
+	I also notice that when I click Path3D_TrainTrackPath that a yellow box appears. Apparently (need to verify this), that yellow box is just a bounding box around whatever note that is currently selected
+	in the viewport, sized to enclose that node's full extent. In this case, the box is big enough to contain every point on the curve. Or, it's supposed to be that way. It does not 
+	look like that to me, but eh. I don't think it matters. 
+	
+	Notice that when you create these, the green node represents the beginning of the path and the red node represents the end. The other nodes are just the middle nodes.
+	There is also an additional button that allows you to close the loop, but I am unsure how often we'll need this. 
+	
+How to smooth or curve the path:
+	By default, it's going to draw straight lines. Sometimes, we want it to curve, yes? 
+	Select the Select Control Points button on that toolbar I mentioned earler. Now, Shift+Click+Drag to modify the curve. Simple enough. 
+	
+Quick Notes about PathFollow3D:
+	There is an option in the inspector for this node, and it is called Rotation Mode. I am setting this to Oriented which will allow the train to rotate without fully inverting - this
+	will allow for banking and leaning into turns without causing the train to do weird things that we do not want, hopefully.
+	
+By now, I have also added AnimatableBody3D as a child of PathFollow3D. Lots of children here. Oh, and a CollisionShape3D, yet another child. Woo. 

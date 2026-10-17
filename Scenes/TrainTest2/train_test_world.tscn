@@ -1,0 +1,237 @@
+[gd_scene format=3 uid="uid://cpwyw5cnk8xyw"]
+
+[ext_resource type="Script" uid="uid://bkgasfgsjmwug" path="res://Scripts/Test/FirstPerson/test_player.gd" id="1_l4eee"]
+[ext_resource type="PackedScene" uid="uid://dyird7m0gisjg" path="res://Scenes/TrainTest2/TrainCar.tscn" id="2_eegt8"]
+
+[sub_resource type="ProceduralSkyMaterial" id="SkyMat_world"]
+sky_horizon_color = Color(0.66, 0.72, 0.8, 1)
+ground_horizon_color = Color(0.66, 0.72, 0.8, 1)
+
+[sub_resource type="Sky" id="Sky_world"]
+sky_material = SubResource("SkyMat_world")
+
+[sub_resource type="Environment" id="Env_world"]
+background_mode = 2
+sky = SubResource("Sky_world")
+ambient_light_source = 3
+tonemap_mode = 2
+ssr_enabled = true
+ssao_enabled = true
+ssil_enabled = true
+sdfgi_enabled = true
+glow_enabled = true
+volumetric_fog_density = 0.0186
+
+[sub_resource type="FastNoiseLite" id="Noise_ground"]
+frequency = 0.02
+
+[sub_resource type="NoiseTexture2D" id="NoiseTex_ground"]
+noise = SubResource("Noise_ground")
+seamless = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_da1w7"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_ground"]
+albedo_color = Color(0.45, 0.62, 0.32, 1)
+albedo_texture = SubResource("NoiseTex_ground")
+heightmap_scale = -2.438
+heightmap_texture = SubResource("NoiseTexture2D_da1w7")
+uv1_scale = Vector3(0.05, 0.05, 0.05)
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_ground"]
+material = SubResource("Mat_ground")
+size = Vector3(300, 1, 260)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ground"]
+size = Vector3(300, 1, 260)
+
+[sub_resource type="StandardMaterial3D" id="Mat_platform"]
+albedo_color = Color(0.75, 0.72, 0.66, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_platform"]
+material = SubResource("Mat_platform")
+size = Vector3(13, 1.5, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_platform"]
+size = Vector3(13, 1.5, 4)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="Curve3D" id="Curve3D_h76hu"]
+closed = true
+_data = {
+"points": PackedVector3Array(7.3, 0, -0.7, -7.3, 0, 0.7, 0.9258728, 0, -30.897774, 22.1, 0, -12.900001, -22.1, 0, 12.900001, -28.769997, 0, -18.825052, -4.1, 0, -14.900001, 4.1, 0, 14.900001, -36.4, 0, 108.7, -26.2, 0, -3.4, 26.2, 0, 3.4, 57.204277, 0, 115.62278, -17.300001, 0, 16.300001, 17.300001, 0, -16.300001, 37.674637, 0, -38.356148, -2.6000001, 0, -9.5, 2.6000001, 0, 9.5, 71.74049, 0, -17.501102, 0.4, 0, -7.3, -0.4, 0, 7.3, 70.572525, 0, 5.7672505, -7.5, 0, -29.5, 7.5, 0, 29.5, 63.572525, 0, 56.932034, -2.6000001, 0, 8.7, 2.6000001, 0, -8.7, 86.92415, 0, 29.645798, -11.2, 0, 24.300001, 11.2, 0, -24.300001, 125.00013, 0, 10.874181, -2.8, 0, 17, 2.8, 0, -17, 126.2946, 0, -41.03857, 20.9, 0, 17.800001, -20.9, 0, -17.800001, 90.59133, -0.18000412, -74.765816, 7.9, 0, -5, -7.9, 0, 5, 37.674637, 0, -48.348797, 9.5, 0, -6.1, -9.5, 0, 6.1, 16.261818, 0, -36.928623),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 14
+
+[sub_resource type="StandardMaterial3D" id="Mat_ballast"]
+albedo_color = Color(0.42, 0.4, 0.38, 1)
+albedo_texture = SubResource("NoiseTex_ground")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="Mat_rail"]
+albedo_color = Color(0.55, 0.55, 0.58, 1)
+metallic = 0.8
+roughness = 0.35
+
+[sub_resource type="StandardMaterial3D" id="Mat_landmark_red"]
+albedo_color = Color(0.7, 0.3, 0.25, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_red"]
+material = SubResource("Mat_landmark_red")
+
+[sub_resource type="StandardMaterial3D" id="Mat_landmark_white"]
+albedo_color = Color(1, 0.47058824, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_white"]
+material = SubResource("Mat_landmark_white")
+
+[sub_resource type="StandardMaterial3D" id="Mat_landmark_blue"]
+albedo_color = Color(0.3, 0.4, 0.7, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_blue"]
+material = SubResource("Mat_landmark_blue")
+
+[node name="TrainTestWorld" type="Node3D" unique_id=254859207]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1748201153]
+environment = SubResource("Env_world")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1460323775]
+transform = Transform3D(0.8660254, 0.35355338, -0.35355338, 0, 0.70710677, 0.70710677, 0.5, -0.6123724, 0.6123724, 0, 8, 0)
+shadow_enabled = true
+directional_shadow_max_distance = 250.0
+
+[node name="Ground" type="StaticBody3D" parent="." unique_id=1170942558]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, -0.5, 3)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=2039852520]
+mesh = SubResource("BoxMesh_ground")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=2100748723]
+shape = SubResource("BoxShape3D_ground")
+
+[node name="Platform" type="StaticBody3D" parent="." unique_id=1093384712]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.75, -25)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Platform" unique_id=1322871940]
+mesh = SubResource("BoxMesh_platform")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Platform" unique_id=1588420127]
+shape = SubResource("BoxShape3D_platform")
+
+[node name="TestPlayer" type="CharacterBody3D" parent="." unique_id=558501961]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 2.6, -24)
+script = ExtResource("1_l4eee")
+speed = 8.715
+jump_velocity = 10.895
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestPlayer" unique_id=1135664511]
+shape = SubResource("CapsuleShape3D_player")
+
+[node name="Camera3D" type="Camera3D" parent="TestPlayer" unique_id=1749796007]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+current = true
+
+[node name="Path3D_TrainTrackPath" type="Path3D" parent="." unique_id=1138749398]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+curve = SubResource("Curve3D_h76hu")
+
+[node name="TrackVisuals" type="Node3D" parent="." unique_id=1927364510]
+
+[node name="Ballast" type="CSGPolygon3D" parent="TrackVisuals" unique_id=1203948576]
+use_collision = true
+polygon = PackedVector2Array(-2.2, -0.55, -1.5, -0.18, 1.5, -0.18, 2.2, -0.55)
+mode = 2
+path_node = NodePath("../../Path3D_TrainTrackPath")
+path_interval_type = 0
+path_interval = 0.5
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = true
+material = SubResource("Mat_ballast")
+
+[node name="RailLeft" type="CSGPolygon3D" parent="TrackVisuals" unique_id=1502938471]
+polygon = PackedVector2Array(-0.79, -0.18, -0.79, 0, -0.71, 0, -0.71, -0.18)
+mode = 2
+path_node = NodePath("../../Path3D_TrainTrackPath")
+path_interval_type = 0
+path_interval = 0.5
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = true
+material = SubResource("Mat_rail")
+
+[node name="RailRight" type="CSGPolygon3D" parent="TrackVisuals" unique_id=1677283940]
+polygon = PackedVector2Array(0.71, -0.18, 0.71, 0, 0.79, 0, 0.79, -0.18)
+mode = 2
+path_node = NodePath("../../Path3D_TrainTrackPath")
+path_interval_type = 0
+path_interval = 0.5
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = true
+material = SubResource("Mat_rail")
+
+[node name="Landmarks" type="Node3D" parent="." unique_id=1384756201]
+
+[node name="Tower1" type="MeshInstance3D" parent="Landmarks" unique_id=1110000001]
+transform = Transform3D(8, 0, 0, 0, 20, 0, 0, 0, 8, -60, 10, -60)
+mesh = SubResource("BoxMesh_red")
+
+[node name="Tower2" type="MeshInstance3D" parent="Landmarks" unique_id=1110000002]
+transform = Transform3D(12, 0, 0, 0, 8, 0, 0, 0, 12, -70, 4, 20)
+mesh = SubResource("BoxMesh_white")
+
+[node name="Tower3" type="MeshInstance3D" parent="Landmarks" unique_id=1110000003]
+transform = Transform3D(6, 0, 0, 0, 30, 0, 0, 0, 6, -55, 15, 75)
+mesh = SubResource("BoxMesh_blue")
+
+[node name="Tower4" type="MeshInstance3D" parent="Landmarks" unique_id=1110000004]
+transform = Transform3D(15, 0, 0, 0, 10, 0, 0, 0, 10, 20, 5, 95)
+mesh = SubResource("BoxMesh_red")
+
+[node name="Tower5" type="MeshInstance3D" parent="Landmarks" unique_id=1110000005]
+transform = Transform3D(8, 0, 0, 0, 16, 0, 0, 0, 8, 85, 8, 90)
+mesh = SubResource("BoxMesh_white")
+
+[node name="Tower6" type="MeshInstance3D" parent="Landmarks" unique_id=1110000006]
+transform = Transform3D(10, 0, 0, 0, 24, 0, 0, 0, 10, 145, 12, 70)
+mesh = SubResource("BoxMesh_blue")
+
+[node name="Tower7" type="MeshInstance3D" parent="Landmarks" unique_id=1110000007]
+transform = Transform3D(10, 0, 0, 0, 6, 0, 0, 0, 20, 150, 3, 0)
+mesh = SubResource("BoxMesh_red")
+
+[node name="Tower8" type="MeshInstance3D" parent="Landmarks" unique_id=1110000008]
+transform = Transform3D(8, 0, 0, 0, 18, 0, 0, 0, 8, 140, 9, -75)
+mesh = SubResource("BoxMesh_white")
+
+[node name="Tower9" type="MeshInstance3D" parent="Landmarks" unique_id=1110000009]
+transform = Transform3D(20, 0, 0, 0, 12, 0, 0, 0, 8, 70, 6, -90)
+mesh = SubResource("BoxMesh_blue")
+
+[node name="Tower10" type="MeshInstance3D" parent="Landmarks" unique_id=1110000010]
+transform = Transform3D(8, 0, 0, 0, 14, 0, 0, 0, 8, 0, 7, -85)
+mesh = SubResource("BoxMesh_red")
+
+[node name="TrainCar" parent="." unique_id=19321220 node_paths=PackedStringArray("track") instance=ExtResource("2_eegt8")]
+track = NodePath("../Path3D_TrainTrackPath")
+test_speed = 22.705

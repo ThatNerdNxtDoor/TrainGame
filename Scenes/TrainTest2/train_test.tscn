@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://c2xnl34h0klrm"]
+
+[ext_resource type="Script" uid="uid://bkgasfgsjmwug" path="res://Scripts/Test/FirstPerson/test_player.gd" id="1_l4eee"]
+[ext_resource type="PackedScene" uid="uid://dyird7m0gisjg" path="res://Scenes/TrainTest2/TrainCar.tscn" id="2_eegt8"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ground"]
+size = Vector3(16, 1, 16)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ground"]
+size = Vector3(30, 1, 46)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="Curve3D" id="Curve3D_h76hu"]
+closed = true
+_data = {
+"points": PackedVector3Array(7.3, 0, -0.7, -7.3, 0, 0.7, 0.9258728, 0, -30.897774, 22.1, 0, -12.900001, -22.1, 0, 12.900001, -28.769997, 0, -18.825052, -4.1, 0, -14.900001, 4.1, 0, 14.900001, -40.4, 0, 9.7, -26.2, 0, -3.4, 26.2, 0, 3.4, 6.2042775, 0, 25.62278, -5.5, 0, 3.5, 5.5, 0, -3.5, 43.709167, 0, 17.771412, 9.5, 0, 17.6, -9.5, 0, -17.6, 48.965042, 0, -12.271429, -17.300001, 0, 16.300001, 17.300001, 0, -16.300001, 37.674637, 0, -38.356148, -2.6000001, 0, -9.5, 2.6000001, 0, 9.5, 71.74049, 0, -17.501102, 0.4, 0, -7.3, -0.4, 0, 7.3, 70.572525, 0, 5.7672505, -7.5, 0, -29.5, 7.5, 0, 29.5, 63.572525, 0, 56.932034, -2.6000001, 0, 8.7, 2.6000001, 0, -8.7, 86.92415, 0, 29.645798, 2.7, 0, -6.2000003, -2.7, 0, 6.2000003, 100.321304, 0, 5.683506, -2.8, 0, 17, 2.8, 0, -17, 108.2946, 0, -25.03857, 20.9, 0, 17.800001, -20.9, 0, -17.800001, 105.28311, 0, -50.08876, 0, 0, 0, 0, 0, 0, 37.674637, 0, -48.348797, 9.5, 0, -6.1, -9.5, 0, 6.1, 16.261818, 0, -36.928623),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 16
+
+[node name="FirstPersonTest" type="Node3D" unique_id=254859207]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1460323775]
+transform = Transform3D(0.8660254, 0.35355338, -0.35355338, 0, 0.70710677, 0.70710677, 0.5, -0.6123724, 0.6123724, 0, 8, 0)
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="." unique_id=1170942558]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=2039852520]
+transform = Transform3D(1.8899999, 0, 0, 0, 1, 0, 0, 0, 2.9399998, 0, 0, 0)
+mesh = SubResource("BoxMesh_ground")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=2100748723]
+shape = SubResource("BoxShape3D_ground")
+
+[node name="TestPlayer" type="CharacterBody3D" parent="." unique_id=558501961]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+script = ExtResource("1_l4eee")
+speed = 8.715
+jump_velocity = 10.895
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestPlayer" unique_id=1135664511]
+shape = SubResource("CapsuleShape3D_player")
+
+[node name="Camera3D" type="Camera3D" parent="TestPlayer" unique_id=1749796007]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+current = true
+
+[node name="Path3D_TrainTrackPath" type="Path3D" parent="." unique_id=1138749398]
+curve = SubResource("Curve3D_h76hu")
+
+[node name="TrainCar" parent="." unique_id=19321220 node_paths=PackedStringArray("track") instance=ExtResource("2_eegt8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, -22)
+track = NodePath("../Path3D_TrainTrackPath")
