@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cpwyw5cnk8xyw"]
 
 [ext_resource type="Script" uid="uid://bkgasfgsjmwug" path="res://Scripts/Test/FirstPerson/test_player.gd" id="1_l4eee"]
+[ext_resource type="Script" uid="uid://cwa3euit1h5at" path="res://Scenes/TrainTest2/train.gd" id="2_0ggk6"]
 [ext_resource type="PackedScene" uid="uid://dyird7m0gisjg" path="res://Scenes/TrainTest2/TrainCar.tscn" id="2_eegt8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="SkyMat_world"]
@@ -232,6 +233,13 @@ mesh = SubResource("BoxMesh_blue")
 transform = Transform3D(8, 0, 0, 0, 14, 0, 0, 0, 8, 0, 7, -85)
 mesh = SubResource("BoxMesh_red")
 
-[node name="TrainCar" parent="." unique_id=19321220 node_paths=PackedStringArray("track") instance=ExtResource("2_eegt8")]
-track = NodePath("../Path3D_TrainTrackPath")
-test_speed = 22.705
+[node name="Train" type="Node3D" parent="." unique_id=1318921874]
+script = ExtResource("2_0ggk6")
+
+[node name="TrainCar" parent="Train" unique_id=19321220 node_paths=PackedStringArray("track") instance=ExtResource("2_eegt8")]
+bogie_offset = 7.0
+track = NodePath("../../Path3D_TrainTrackPath")
+
+[node name="TrainCar2" parent="Train" unique_id=635476398 node_paths=PackedStringArray("track") instance=ExtResource("2_eegt8")]
+bogie_offset = 7.0
+track = NodePath("../../Path3D_TrainTrackPath")

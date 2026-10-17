@@ -3,7 +3,9 @@ extends AnimatableBody3D
 
 
 ## Length of the car, end to end, in meters. Used to work out spacing between cars. 
-@export var car_length : float = 14.0
+## When the game starts (see _ready), this will be measured automatically. This value will be used to space the cars. The default values are just kinda here now.
+## Just be sure to never scale the MeshInstance3D node (its transform -> scale). This will break the automatic car_length algo.
+var car_length : float = 14.0
 
 ## Meters from the cars center to each wheel set (front and rear). 
 @export var bogie_offset : float = 5.0
@@ -11,28 +13,17 @@ extends AnimatableBody3D
 ## Half the height of the car model. This should allow the car to sit on top of the track as opposed to having the track in the middle of the car.
 @export var ride_height: float = 0.5 
 
-
-
-
-
-
-
-
 ## The track this car rides on. 
 @export var track : Path3D
 
-## Temporary: Meters per second. The train controller will replace this, but keeping this here for now. 
-@export var test_speed : float = 10.0
+# Runs once when the car enters the game, before a physics tick. Measures the car's model
+# so that the train spaces cars by their real length.
+func _ready() -> void:
+	var model := $MeshInstance3D as MeshInstance3D
+	if model != null:
+		car_length = model.get_aabb().size.z
 
-var center_distance : float = 0.0
-
-func _physics_process(delta: float) -> void:
-	center_distance += test_speed * delta # TEMPORARY
-	place_on_track(center_distance)
-	
-	
 ## Given a distance along the track, this function puts the car there. 
-## Each tick (_physics_process), adds a bit to center_distance and calls this function, which moves the car. 
 func place_on_track(distance: float) -> void: 
 	var curve := track.curve # Grab the track's shape, drawn with Path3D.
 	var length := curve.get_baked_length() # How long the track is, in meters I believe. 
