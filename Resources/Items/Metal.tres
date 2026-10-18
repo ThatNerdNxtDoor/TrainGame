@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1_eoq8t")
 item_name = "Metal"
+item_description = "I wonder what this is for?"
 item_id = "metal"
 max_stack = 64
 icon = ExtResource("1_b7u6v")

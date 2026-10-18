@@ -5,5 +5,6 @@
 [resource]
 script = ExtResource("1_g3n5s")
 item_name = "Fuel"
+item_description = "Used to give the train more mileage"
 item_id = "fuel"
 metadata/_custom_type_script = "uid://bq8xvodag7gb0"
