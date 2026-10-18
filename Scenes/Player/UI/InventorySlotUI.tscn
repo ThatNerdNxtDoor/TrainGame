@@ -2,11 +2,30 @@
 
 [ext_resource type="Script" uid="uid://dier3hvbcpls1" path="res://Scripts/Inventory/UI/InventorySlotUI.gd" id="1_xa548"]
 [ext_resource type="FontFile" uid="uid://dfkadgypc7cij" path="res://Sorean Bold.otf" id="2_fe485"]
+[ext_resource type="Shader" uid="uid://l0x7smwx2daq" path="res://Scenes/UI/Hover_Shader.gdshader" id="3_q0cgi"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v8kje"]
+shader = ExtResource("3_q0cgi")
+shader_parameter/blur_amount = 2.0
+shader_parameter/tint_color = Color(0, 0, 0, 0.3)
+shader_parameter/border_color = Color(1, 0.5, 0, 1)
+shader_parameter/border_thickness = 0.02
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_riqys"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.82208365, 0.18898639, 0.3816577, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d62m0"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [node name="InventorySlotUI" type="Panel" unique_id=707597695]
 custom_minimum_size = Vector2(200, 200)
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 200.0
+offset_bottom = 200.0
 script = ExtResource("1_xa548")
 
 [node name="ItemIcon" type="TextureRect" parent="." unique_id=134961169]
@@ -49,3 +68,49 @@ grow_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_fe485")
 theme_override_font_sizes/font_size = 24
+
+[node name="HoverBorder" type="Panel" parent="." unique_id=23958539]
+visible = false
+material = SubResource("ShaderMaterial_v8kje")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="SelectedBorder" type="Panel" parent="." unique_id=535136809]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_riqys")
+
+[node name="TooltipPanel" type="PanelContainer" parent="." unique_id=23539702]
+z_index = 10
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -156.0
+offset_top = -132.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_d62m0")
+
+[node name="TooltipText" type="Label" parent="TooltipPanel" unique_id=1468246929]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_fe485")
+autowrap_mode = 2
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
