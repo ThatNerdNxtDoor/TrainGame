@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://vrvpf255h7k4" path="res://Assets/Sprites/Wall Textures/BrickTile.png" id="4_lpl7w"]
 [ext_resource type="PackedScene" uid="uid://bgffdlisv23pj" path="res://Scrapped stuff/Player.tscn" id="5_usjl8"]
 [ext_resource type="PackedScene" uid="uid://bipinsqxxdoim" path="res://Scenes/Objects/Gear.tscn" id="6_imbhg"]
+[ext_resource type="Script" uid="uid://tgbg1sebe55n" path="res://Scripts/Objects/NetworkedObjectSpawner.gd" id="9_puloj"]
+[ext_resource type="PackedScene" uid="uid://dpbludm54m5hx" path="res://Scenes/Objects/TurningClient.tscn" id="10_qbnow"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yf5fn"]
 render_priority = 0
@@ -178,3 +180,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.279909, 16.20331, 1.371110
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1423169541]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.892296, 0)
 mesh = SubResource("BoxMesh_g4v7s")
+
+[node name="NetworkedObjectSpawner" type="Node3D" parent="." unique_id=1338380584]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+script = ExtResource("9_puloj")
+spawn_on_start = true
+server_object = ExtResource("6_imbhg")
+client_object = ExtResource("10_qbnow")
+objectName = "NetworkedTurningGear"
+metadata/_custom_type_script = "uid://tgbg1sebe55n"
+
+[node name="NetworkedObjectSpawner2" type="Node3D" parent="." unique_id=1212062631]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 4)
+script = ExtResource("9_puloj")
+spawn_on_start = true
+server_object = ExtResource("6_imbhg")
+client_object = ExtResource("10_qbnow")
+objectName = "NetworkedTurningGear"
+metadata/_custom_type_script = "uid://tgbg1sebe55n"

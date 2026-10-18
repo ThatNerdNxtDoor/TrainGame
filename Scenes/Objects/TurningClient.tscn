@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dpbludm54m5hx"]
+
+[ext_resource type="ArrayMesh" uid="uid://cil5denfysiwd" path="res://Assets/Models/Gear.glb" id="1_g182i"]
+[ext_resource type="Script" uid="uid://de4scho46dcx4" path="res://Scripts/Objects/ConstantTurningThingClient.gd" id="1_rjq06"]
+[ext_resource type="Shader" uid="uid://cc7u6pr8vo4ct" path="res://Assets/Shaders and materials/Toon.gdshader" id="2_rjq06"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kal0y"]
+render_priority = 0
+shader = ExtResource("2_rjq06")
+shader_parameter/color_tint = Color(0.6156863, 0.62352943, 0.69803923, 1)
+
+[node name="TurningClient" type="Node3D" unique_id=1159479449]
+script = ExtResource("1_rjq06")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=930172997]
+transform = Transform3D(-8.742278e-08, -2, 0, 2, -8.742278e-08, 0, 0, 0, 2, 0, 0, 0)
+mesh = ExtResource("1_g182i")
+surface_material_override/0 = SubResource("ShaderMaterial_kal0y")

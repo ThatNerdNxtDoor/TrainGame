@@ -16,4 +16,11 @@ func _process(delta: float) -> void:
 	#rotation = Vector3.ZERO;
 	#current_rotation = speed + delta
 	rotate(axis, speed * delta)
+	set_rotation_rpc.rpc(rotation)
+	
+	pass
+
+@rpc("any_peer", "call_remote", "unreliable_ordered")
+func set_rotation_rpc(rotation: Vector3):
+	#self.rotation = rotation;
 	pass

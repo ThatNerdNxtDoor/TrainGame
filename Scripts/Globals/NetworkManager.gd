@@ -14,6 +14,7 @@ var player_ids: PackedInt32Array = PackedInt32Array();
 func _ready() -> void:
 	multiplayer.peer_disconnected.connect(on_disconnected)
 	multiplayer.peer_connected.connect(on_connected)
+	#multiplayer.server_disconnected
 	pass # Replace with function body.
 
 
