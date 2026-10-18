@@ -279,3 +279,30 @@ func print_inventory() -> void:
 
 	print("===============================")
 	print("")
+	
+# Swap slots
+func swap_slots(index_a: int, index_b: int) -> void:
+	
+	# Handle invalid slots
+	if index_a < 0 or index_a >= slots.size():
+		return
+
+	if index_b < 0 or index_b >= slots.size():
+		return
+
+	# Handle selecting the same slot
+	if index_a == index_b:
+		return
+
+	# Perform the swap
+	var temp_item: ItemData = slots[index_a].item
+	var temp_quantity: int = slots[index_a].quantity
+
+	slots[index_a].item = slots[index_b].item
+	slots[index_a].quantity = slots[index_b].quantity
+
+	slots[index_b].item = temp_item
+	slots[index_b].quantity = temp_quantity
+
+	# Emit signal
+	inventory_changed.emit()

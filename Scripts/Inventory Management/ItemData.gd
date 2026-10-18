@@ -9,6 +9,9 @@ extends Resource
 # Name displayed to the player
 @export var item_name: String = "Item"
 
+# Item description
+@export_multiline var item_description = ""
+
 # Unique ID used to determine whether two items are the same
 @export var item_id: String = ""
 
