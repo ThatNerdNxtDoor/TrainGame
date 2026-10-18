@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bkgasfgsjmwug" path="res://Scripts/Test/FirstPerson/test_player.gd" id="1_l4eee"]
 [ext_resource type="Script" uid="uid://cwa3euit1h5at" path="res://Scenes/TrainTest2/train.gd" id="2_0ggk6"]
 [ext_resource type="PackedScene" uid="uid://dyird7m0gisjg" path="res://Scenes/TrainTest2/TrainCar.tscn" id="2_eegt8"]
+[ext_resource type="Script" uid="uid://b3b6agmx47yae" path="res://Scenes/TrainTest2/track.gd" id="4_6aqdx"]
 
 [sub_resource type="ProceduralSkyMaterial" id="SkyMat_world"]
 sky_horizon_color = Color(0.66, 0.72, 0.8, 1)
@@ -61,14 +62,6 @@ size = Vector3(13, 1.5, 4)
 radius = 0.4
 height = 1.8
 
-[sub_resource type="Curve3D" id="Curve3D_h76hu"]
-closed = true
-_data = {
-"points": PackedVector3Array(7.3, 0, -0.7, -7.3, 0, 0.7, 0.9258728, 0, -30.897774, 22.1, 0, -12.900001, -22.1, 0, 12.900001, -28.769997, 0, -18.825052, -4.1, 0, -14.900001, 4.1, 0, 14.900001, -36.4, 0, 108.7, -26.2, 0, -3.4, 26.2, 0, 3.4, 57.204277, 0, 115.62278, -17.300001, 0, 16.300001, 17.300001, 0, -16.300001, 37.674637, 0, -38.356148, -2.6000001, 0, -9.5, 2.6000001, 0, 9.5, 71.74049, 0, -17.501102, 0.4, 0, -7.3, -0.4, 0, 7.3, 70.572525, 0, 5.7672505, -7.5, 0, -29.5, 7.5, 0, 29.5, 63.572525, 0, 56.932034, -2.6000001, 0, 8.7, 2.6000001, 0, -8.7, 86.92415, 0, 29.645798, -11.2, 0, 24.300001, 11.2, 0, -24.300001, 125.00013, 0, 10.874181, -2.8, 0, 17, 2.8, 0, -17, 126.2946, 0, -41.03857, 20.9, 0, 17.800001, -20.9, 0, -17.800001, 90.59133, -0.18000412, -74.765816, 7.9, 0, -5, -7.9, 0, 5, 37.674637, 0, -48.348797, 9.5, 0, -6.1, -9.5, 0, 6.1, 16.261818, 0, -36.928623),
-"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-}
-point_count = 14
-
 [sub_resource type="StandardMaterial3D" id="Mat_ballast"]
 albedo_color = Color(0.42, 0.4, 0.38, 1)
 albedo_texture = SubResource("NoiseTex_ground")
@@ -97,6 +90,14 @@ albedo_color = Color(0.3, 0.4, 0.7, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_blue"]
 material = SubResource("Mat_landmark_blue")
+
+[sub_resource type="Curve3D" id="Curve3D_h76hu"]
+closed = true
+_data = {
+"points": PackedVector3Array(7.3, 0, -0.7, -7.3, 0, 0.7, 0.9258728, 0, -30.897774, 22.1, 0, -12.900001, -22.1, 0, 12.900001, -28.769997, 0, -18.825052, -4.1, 0, -14.900001, 4.1, 0, 14.900001, -36.4, 0, 108.7, -26.2, 0, -3.4, 26.2, 0, 3.4, 59.204277, 0, 119.62278, -17.300001, 0, 16.300001, 17.300001, 0, -16.300001, 37.674637, 0, -38.356148, -2.6000001, 0, -9.5, 2.6000001, 0, 9.5, 71.74049, 0, -17.501102, 0.4, 0, -7.3, -0.4, 0, 7.3, 70.572525, 0, 5.7672505, -7.5, 0, -29.5, 7.5, 0, 29.5, 63.572525, 0, 56.932034, -2.6000001, 0, 8.7, 2.6000001, 0, -8.7, 86.92415, 0, 29.645798, -11.2, 0, 24.300001, 11.2, 0, -24.300001, 125.00013, 0, 10.874181, -2.8, 0, 17, 2.8, 0, -17, 126.2946, 0, -41.03857, 20.9, 0, 17.800001, -20.9, 0, -17.800001, 90.59133, -0.18000412, -74.765816, 7.9, 0, -5, -7.9, 0, 5, 37.674637, 0, -48.348797, 9.5, 0, -6.1, -9.5, 0, 6.1, 16.261818, 0, -36.928623),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 14
 
 [node name="TrainTestWorld" type="Node3D" unique_id=254859207]
 
@@ -139,17 +140,13 @@ shape = SubResource("CapsuleShape3D_player")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 current = true
 
-[node name="Path3D_TrainTrackPath" type="Path3D" parent="." unique_id=1138749398]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-curve = SubResource("Curve3D_h76hu")
-
 [node name="TrackVisuals" type="Node3D" parent="." unique_id=1927364510]
 
 [node name="Ballast" type="CSGPolygon3D" parent="TrackVisuals" unique_id=1203948576]
 use_collision = true
 polygon = PackedVector2Array(-2.2, -0.55, -1.5, -0.18, 1.5, -0.18, 2.2, -0.55)
 mode = 2
-path_node = NodePath("../../Path3D_TrainTrackPath")
+path_node = NodePath("../../Track/Path3D_TrainTrackPath")
 path_interval_type = 0
 path_interval = 0.5
 path_simplify_angle = 0.0
@@ -164,7 +161,7 @@ material = SubResource("Mat_ballast")
 [node name="RailLeft" type="CSGPolygon3D" parent="TrackVisuals" unique_id=1502938471]
 polygon = PackedVector2Array(-0.79, -0.18, -0.79, 0, -0.71, 0, -0.71, -0.18)
 mode = 2
-path_node = NodePath("../../Path3D_TrainTrackPath")
+path_node = NodePath("../../Track/Path3D_TrainTrackPath")
 path_interval_type = 0
 path_interval = 0.5
 path_simplify_angle = 0.0
@@ -179,7 +176,7 @@ material = SubResource("Mat_rail")
 [node name="RailRight" type="CSGPolygon3D" parent="TrackVisuals" unique_id=1677283940]
 polygon = PackedVector2Array(0.71, -0.18, 0.71, 0, 0.79, 0, 0.79, -0.18)
 mode = 2
-path_node = NodePath("../../Path3D_TrainTrackPath")
+path_node = NodePath("../../Track/Path3D_TrainTrackPath")
 path_interval_type = 0
 path_interval = 0.5
 path_simplify_angle = 0.0
@@ -233,13 +230,19 @@ mesh = SubResource("BoxMesh_blue")
 transform = Transform3D(8, 0, 0, 0, 14, 0, 0, 0, 8, 0, 7, -85)
 mesh = SubResource("BoxMesh_red")
 
-[node name="Train" type="Node3D" parent="." unique_id=1318921874]
+[node name="Train" type="Node3D" parent="." unique_id=1318921874 node_paths=PackedStringArray("track")]
 script = ExtResource("2_0ggk6")
+track = NodePath("../Track")
 
-[node name="TrainCar" parent="Train" unique_id=19321220 node_paths=PackedStringArray("track") instance=ExtResource("2_eegt8")]
+[node name="TrainCar" parent="Train" unique_id=19321220 instance=ExtResource("2_eegt8")]
 bogie_offset = 7.0
-track = NodePath("../../Path3D_TrainTrackPath")
 
-[node name="TrainCar2" parent="Train" unique_id=635476398 node_paths=PackedStringArray("track") instance=ExtResource("2_eegt8")]
+[node name="TrainCar2" parent="Train" unique_id=635476398 instance=ExtResource("2_eegt8")]
 bogie_offset = 7.0
-track = NodePath("../../Path3D_TrainTrackPath")
+
+[node name="Track" type="Node3D" parent="." unique_id=1293305966]
+script = ExtResource("4_6aqdx")
+
+[node name="Path3D_TrainTrackPath" type="Path3D" parent="Track" unique_id=1138749398]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+curve = SubResource("Curve3D_h76hu")

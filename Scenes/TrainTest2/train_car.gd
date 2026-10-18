@@ -14,7 +14,7 @@ var car_length : float = 14.0
 @export var ride_height: float = 0.5 
 
 ## The track this car rides on. 
-@export var track : Path3D
+var track : Track
 
 # Runs once when the car enters the game, before a physics tick. Measures the car's model
 # so that the train spaces cars by their real length.
@@ -25,15 +25,11 @@ func _ready() -> void:
 
 ## Given a distance along the track, this function puts the car there. 
 func place_on_track(distance: float) -> void: 
-	var curve := track.curve # Grab the track's shape, drawn with Path3D.
-	var length := curve.get_baked_length() # How long the track is, in meters I believe. 
 	
-	# fposmod(..., length) note: Wraps the distance around. If 105m is asked for a 100m loop, you get 5m, so the car loops instead of running off the end. 
-	var front := curve.sample_baked(fposmod(distance + bogie_offset, length)) # Find the point on the track 5 meters ahead of the car's center. Front wheels are here. 
-	var rear := curve.sample_baked(fposmod(distance - bogie_offset, length)) # Same, but back wheels.
+	# Ask the Track where the front and rear wheel sets are. It handles segments and looping
+	var front_global := track.position_at(distance + bogie_offset)
+	var rear_global := track.position_at(distance - bogie_offset)
 	
-	var front_global := track.global_transform * front # The curve gives positions measured from the Path3D node. These two lines convert them into world positions. 
-	var rear_global := track.global_transform * rear
 	
 	var middle := (front_global + rear_global) / 2.0 # The point halfway between the two wheel sets - this is where the car's center goes.
 	var facing := Basis.looking_at(front_global - rear_global, Vector3.UP) # A rotation that points the car from the rear wheels towards the front wheels, with its roof facing up.

@@ -6,13 +6,13 @@ extends Node3D
 ## The order of the cars in the Scene panel is the order on the track. The top car is in the front. 
 
 
-## Acceleration at full power, in meters per second. 
+## Acceleration at full power, in meters per second per second. 
 @export var max_acceleration : float = 0.8
 
-## Deceleration at full brake, in meters per second.
+## Deceleration at full brake, in meters per second per second.
 @export var max_braking : float = 1.5
 
-## How much speed is lost per second while coasting (the level is at ) from air and friction. 
+## How much speed is lost per second while coasting (the level is at 0) from air and friction. 
 @export var coasting_friction : float = 0.05
 
 ## The fastest the train can go, in meters per second. 
@@ -36,6 +36,16 @@ var distance : float = 0.0
 ## The space between two couples cars, in meters. 
 @export var coupling_gap : float = 2.0
 
+@export var track : Track
+
+func _ready() -> void:
+	for child in get_children(): 
+		var car := child as TrainCar
+		if car != null:
+			car.track = track
+
+
+
 # Runs every physics tick, moves the train forward, then places every car behind the one before it.
 func _physics_process(delta: float) -> void:
 	# Move the lever while a key is held. get_axis gives -1 (down), 0 (neither), or +1 (held)
@@ -49,6 +59,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		acceleration = current_lever_position * max_braking # Slow down
 		
+	acceleration -= coasting_friction
 	speed = clampf(speed + acceleration * delta, 0.0, max_speed)
 	
 	distance += speed * delta
