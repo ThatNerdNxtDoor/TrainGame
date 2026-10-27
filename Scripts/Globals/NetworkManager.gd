@@ -12,6 +12,7 @@ signal player_disconnected(id: int);
 var player_ids: PackedInt32Array = PackedInt32Array();
 
 func _ready() -> void:
+	
 	multiplayer.peer_disconnected.connect(on_disconnected)
 	multiplayer.peer_connected.connect(on_connected)
 	#multiplayer.server_disconnected
@@ -30,6 +31,7 @@ func create_server():
 	var e = peer.create_server(PORT, MAX_PLAYERS);
 	print(e);
 	multiplayer.multiplayer_peer = peer;
+	player_ids.append(multiplayer.get_unique_id())
 
 func disconnect_from_lobby ():
 	var peer = OfflineMultiplayerPeer.new();
@@ -65,6 +67,19 @@ func on_connected(id: int):
 	player_ids.append(id);
 	print(id, " connected")
 	print_ids()
+	distribute_player_list();
+	pass
+
+func distribute_player_list ():
+	if multiplayer.is_server():
+		_set_player_list_rpc.rpc(player_ids);
+	pass
+
+@rpc("authority", "call_remote", "reliable")
+func _set_player_list_rpc(player_list):
+	self.player_ids = player_list;
+	print("recieved Player List")
+	print_ids();
 	pass
 
 @rpc("any_peer", "call_local", "reliable")
@@ -73,6 +88,6 @@ func load_level(level_name: String):
 	get_tree().change_scene_to_file(level_name)
 
 func print_ids():
-	if multiplayer.is_server():
-		for i in range(len(player_ids)):
-			print(player_ids[i])
+	#if multiplayer.is_server():
+	for i in range(len(player_ids)):
+		print(player_ids[i])

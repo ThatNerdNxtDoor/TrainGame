@@ -189,12 +189,3 @@ server_object = ExtResource("6_imbhg")
 client_object = ExtResource("10_qbnow")
 objectName = "NetworkedTurningGear"
 metadata/_custom_type_script = "uid://tgbg1sebe55n"
-
-[node name="NetworkedObjectSpawner2" type="Node3D" parent="." unique_id=1212062631]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 4)
-script = ExtResource("9_puloj")
-spawn_on_start = true
-server_object = ExtResource("6_imbhg")
-client_object = ExtResource("10_qbnow")
-objectName = "NetworkedTurningGear"
-metadata/_custom_type_script = "uid://tgbg1sebe55n"
