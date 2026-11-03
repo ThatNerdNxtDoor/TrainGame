@@ -3,6 +3,7 @@
 extends CharacterBody3D
 class_name Enemy
 
+##The archetype of navigation behavior the enemy engages in when there are no targets to pursue.
 enum NavBehavior {
 	## The Actor will remain stationary, effectively disabling its navigation until it has something
 	## to pursue.
@@ -21,6 +22,23 @@ enum NavBehavior {
 	## there. If the actor is moved away from that point, it will attempt to return to it. 
 	PATROLLING}
 
+#---------------------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------
+@export_category("Stats")
+
+##The health of the enemy. Everytime it receives damage, it will check if it's health is still above
+## 0, in which case it will call [param death()]
+@export var health : float = 10.0
+#TODO: For the damage types, make them a resource type with a percent modifier to determine how much
+# the weakness/resistance affects the damage.
+##The damage type(s) the enemy is vulnerable to, taking more damage.
+@export var vulnerable : Array[String]
+##The damage type(s) the enemy is resistant to, taking less damage.
+@export var resistant : Array[String]
+
+#---------------------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------
+@export_category("Navigation")
 ## The preset behavioral nature of the Actor. When not pursuing a target position, this is the
 ## default behavior of the Actor.
 @export var nav_behavior: NavBehavior = NavBehavior.DIRECT
@@ -132,6 +150,7 @@ var pursuit_entity : Node3D
 @export var pursuit_distance : float = 10.0
 
 #---------------------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------
 # Main Functions
 
 ## Sets the position of the navigation target for the Actor.
@@ -236,22 +255,22 @@ func behavior_calculation():
 		#	NavBehavior.PATROLLING:
 		#		pass
 
-## Calculates the movement velocity of the Actor based on its current postion and the target position.
+##Calculates the movement velocity of the Actor based on its current postion and the target position.
 func movement_calculation(delta):
 	if nav_agent.is_navigation_finished() && vel_clamp:
 		velocity.x = 0.0
 		velocity.z = 0.0
 	else:
-		# The Actor's current position.
+		#The Actor's current position.
 		var current_actor_position : Vector3 = global_position
-		# The next point in the navigation path according to the nav agent.
+		#The next point in the navigation path according to the nav agent.
 		var next_path_position : Vector3 = nav_agent.get_next_path_position()
-		# The next point in the nav path is 'flattened' to the current y position to give a
+		#The next point in the nav path is 'flattened' to the current y position to give a
 		# normalized x and z vector.
 		var next_path_pos_flattened : Vector3 = Vector3(next_path_position.x, current_actor_position.y, next_path_position.z)
 		
-		# The Actor is made to face the direction it will move in. If it is at its destination, it
-		#  will not look because it connot look into its own position.
+		#The Actor is made to face the direction it will move in. If it is at its destination, it
+		# will not look because it connot look into its own position.
 		if (self.position == next_path_position):
 			self.look_at(next_path_pos_flattened)
 		if vel_clamp:
@@ -261,25 +280,35 @@ func movement_calculation(delta):
 			velocity.x += current_actor_position.direction_to(next_path_pos_flattened).x * (movement_speed) * delta
 			velocity.z += current_actor_position.direction_to(next_path_pos_flattened).z * (movement_speed) * delta
 		
-		# If the Actor can jump, it will do so if it needs to reach its target.
+		#If the Actor can jump, it will do so if it needs to reach its target.
 		if ((current_actor_position.direction_to(next_path_position).y >= 0.0) &&
 		(abs(current_actor_position.direction_to(next_path_position).x) < 0.01 &&
 		abs(current_actor_position.direction_to(next_path_position).z) < 0.01) && 
 		is_on_floor() && can_jump):
 			velocity.y = jump_velocity
 
+##The basic function to deal damage to the enemy
+#TODO: Add damage types and resistances that can affect how much is dealt.
+func damage(amount):
+	health -= amount
+	if health <= 0:
+		death()
+
+##The action(s) an enemy performs on death. Meant to be overwritten with any unique death effects.
+func death():
+	queue_free()
+
 #---------------------------------------------------------------------------------------------------
 #Signal Functions
 
-## Triggers when the Actor reaches its target destination.
+##Triggers when the Actor reaches its target destination.
 func _on_navigation_agent_3d_target_reached():
 	print("destination")
-	# If the Actor is patrolling and is not pursuing anything, then it should be stationary.
+	#If the Actor is patrolling and is not pursuing anything, then it should be stationary.
 	if pursuit_entity == null:
 		nav_timer.start()
-	pass # Replace with function body.
 
-## Triggers when the Actor reaches a navigation link (ie jumping up to a platform or across a pit.
+##Triggers when the Actor reaches a navigation link (ie jumping up to a platform or across a pit.
 func _on_navigation_link_reaced(details : Dictionary):
 	print("Link Reached")
 	pause_navigation = true
@@ -287,7 +316,7 @@ func _on_navigation_link_reaced(details : Dictionary):
 		print("jump?")
 		velocity.y = jump_velocity
 
-## Triggers when the [param nav_timer] is timed out. 
+##Triggers when the [param nav_timer] is timed out. 
 func _nav_timer_timeout():
 	print("timeout")
 	if nav_behavior == NavBehavior.WANDERING:
@@ -298,7 +327,7 @@ func _nav_timer_timeout():
 		patrol_index = (patrol_index + 1) % patrol_route.size()
 		set_target_position(patrol_route[patrol_index])
 
-## Triggers when a connected body or [Area3D] detects a valid target. When triggered, it activates
+##Triggers when a connected body or [Area3D] detects a valid target. When triggered, it activates
 ## pursuit mode.
 func _aggro_entered(body : Node3D):
 	#First determine the angle from the enemy to the body to decide if a raycast can be shot.

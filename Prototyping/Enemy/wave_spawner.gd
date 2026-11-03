@@ -1,3 +1,4 @@
+##A class that defines a spawn table for a specified group of enemy spawners.
 extends Node3D
 class_name SpawnerPoint
 
@@ -26,7 +27,7 @@ func _spawn_wave():
 	#Divy out enemies across the spawn locations
 	for point in spawn_points:
 		#Check the spawn to see if if condition prevent it from spawning enemies (too many / player near)
-		if (!validate_spawn(point)):
+		if (!validate_spawn_point(point)):
 			continue
 		#Set a standing budget for each point
 		var temp_budget = wave_budget
@@ -36,17 +37,33 @@ func _spawn_wave():
 				if spawn_number <= profile.weighting and temp_budget >= 0:
 					#Determine how many enemies are spawned using the profile's grouping variable.
 					var group_size = randi_range(profile.grouping[0], profile.grouping[1])
+					#Create a shapecast at the position to determine if there are any enities there.
+					var nav_map = get_world_3d().navigation_map
+					var spawn_check = ShapeCast3D.new()
+					spawn_check.shape = CylinderShape3D.new()
+					spawn_check.shape.radius = 1
+					#Set the collision mask to only read for enemy entities.
+					spawn_check.set_collision_mask_value(1, false)
+					spawn_check.set_collision_mask_value(5, true)
+					point.add_child(spawn_check)
 					for i in range(group_size - 1):
 						var spawned_enemy = profile.scene.instantiate()
-						##TODO: Add a way for the spawner to determine if the enemy can be placed on the
-						## generated spot, then keep generating a position until it has a valid one.
-						spawned_enemy.position = point.position + Vector3(randf_range(-3, 3), 0, randf_range(-3, 3))
+						#Repeatedly check for a postition in the nav map that is open.
+						while(true):
+							#The generated point is moved to the closest point on the nav map
+							spawn_check.position = NavigationServer3D.map_get_closest_point(nav_map, point.position + Vector3(randf_range(-3, 3), 0, randf_range(-3, 3)))
+							spawn_check.force_shapecast_update()
+							if(spawn_check.get_collision_count() == 0):
+								break;
+						#Place the enemy at the validated position.
+						spawned_enemy.position = spawn_check.position
 						get_tree().root.add_child(spawned_enemy)
+					spawn_check.queue_free()
 					temp_budget -= profile.cost
 
 ##Uses the spawn point to run a shapecast check to see if there are any players nearby or if there are
 ## too many enemies nearby.
-func validate_spawn(point):
+func validate_spawn_point(point):
 	##TODO: Find a way to check for the a player.
 	#Create a sphere to do a spawn check to determine if there are too many entities to spawn more.
 	var spawn_check = ShapeCast3D.new()

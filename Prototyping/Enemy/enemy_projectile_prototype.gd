@@ -4,7 +4,7 @@ class_name EnemyProjectile
 @export var collision_box : CollisionShape3D
 
 @export var projectile_mesh : MeshInstance3D
-
+##The damage of the projectile.
 @export var damage : int = 10
 
 #--------------------------------------------------------------------------------------------------#

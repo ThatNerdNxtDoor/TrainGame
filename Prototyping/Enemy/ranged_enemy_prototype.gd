@@ -1,7 +1,8 @@
+##A variation of [Enemy] that can fire a projectile.
 extends Enemy
 class_name RangedEnemy
 
-## The Projectile the enemy fires
+## The Projectile the enemy fires.
 @export var projectile : PackedScene
 
 ## The [Timer] Node the actor uses to decide when to shoot its projectile.

@@ -9,7 +9,7 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_g4v7s"]
 radius = 5.0
 
-[node name="EnemyPrototype" type="CharacterBody3D" unique_id=722079134 node_paths=PackedStringArray("nav_agent", "nav_timer")]
+[node name="EnemyPrototype" type="CharacterBody3D" unique_id=722079134 node_paths=PackedStringArray("nav_agent", "nav_timer", "aggro_area")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 collision_layer = 17
 safe_margin = 0.01
@@ -17,6 +17,7 @@ script = ExtResource("1_mex8l")
 nav_behavior = 2
 nav_agent = NodePath("NavigationAgent3D")
 nav_timer = NodePath("Timer")
+aggro_area = NodePath("Area3D")
 
 [node name="Timer" type="Timer" parent="." unique_id=480754252]
 one_shot = true
