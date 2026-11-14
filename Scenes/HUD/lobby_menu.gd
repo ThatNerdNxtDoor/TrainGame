@@ -3,6 +3,7 @@ extends Control
 
 @export_file_path("*.tscn") var levelScene = "res://Scenes/World/TestScene.tscn";
 @onready var textBox = $Panel/TextBox
+@onready var IP_address_box = $"Panel/IP input"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -17,7 +18,12 @@ func create_game():
 	pass
 	
 func connect_to_game():
-	NetworkManager.join_server();
+	var inp = NetworkManager.DEFAULT_IP
+	if len(IP_address_box.text):
+		inp = IP_address_box.text
+	
+	NetworkManager.join_server(inp);
+	
 	pass
 	
 func disconnect_game():
@@ -30,5 +36,5 @@ func ping ():
 	
 func _process (delta: float):
 	var is_server = multiplayer.is_server()
-	textBox.text = ("host" if is_server else "client") + " number of players" + str(len(NetworkManager.player_ids));
+	textBox.text = ("host" if is_server else "client") + " number of players " + str(len(NetworkManager.player_ids));
 	pass

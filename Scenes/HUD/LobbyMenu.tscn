@@ -67,6 +67,16 @@ editable = false
 backspace_deletes_composite_character_enabled = true
 wrap_mode = 1
 
+[node name="IP input" type="TextEdit" parent="Panel" unique_id=567580440]
+layout_mode = 0
+offset_left = 217.0
+offset_top = 231.0
+offset_right = 495.0
+offset_bottom = 267.0
+placeholder_text = "IP address"
+backspace_deletes_composite_character_enabled = true
+wrap_mode = 1
+
 [connection signal="pressed" from="Panel/Create Lobby Button" to="." method="create_game"]
 [connection signal="pressed" from="Panel/Join Lobby Button" to="." method="connect_to_game"]
 [connection signal="pressed" from="Panel/Disconnect Button" to="." method="disconnect_game"]
