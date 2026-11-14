@@ -13,8 +13,8 @@ script = ExtResource("1_xkiii")
 
 [node name="Panel" type="Panel" parent="." unique_id=14928839]
 layout_mode = 0
-offset_right = 284.0
-offset_bottom = 300.0
+offset_right = 514.0
+offset_bottom = 441.0
 
 [node name="Create Lobby Button" type="Button" parent="Panel" unique_id=2002618643]
 layout_mode = 0
@@ -56,6 +56,16 @@ offset_top = 280.0
 offset_right = 175.0
 offset_bottom = 325.0
 text = "LoadLevel"
+
+[node name="TextBox" type="TextEdit" parent="Panel" unique_id=894906713]
+layout_mode = 0
+offset_left = 207.0
+offset_top = 11.0
+offset_right = 499.0
+offset_bottom = 213.0
+editable = false
+backspace_deletes_composite_character_enabled = true
+wrap_mode = 1
 
 [connection signal="pressed" from="Panel/Create Lobby Button" to="." method="create_game"]
 [connection signal="pressed" from="Panel/Join Lobby Button" to="." method="connect_to_game"]
