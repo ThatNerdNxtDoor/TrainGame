@@ -26,7 +26,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 script = ExtResource("2_cvnsp")
 slot_count = 25
 
-[node name="InventoryUI" type="CanvasLayer" parent="." unique_id=1897413718]
+[node name="InventoryUI" type="CanvasLayer" parent="." unique_id=1897413718 groups=["inventory_ui"]]
 script = ExtResource("3_6t5aa")
 
 [node name="InventoryPanel" type="Panel" parent="InventoryUI" unique_id=1117805350]
@@ -49,3 +49,22 @@ layout_mode = 2
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
 columns = 5
+
+[node name="DragOverlay" type="Control" parent="InventoryUI" unique_id=1938412483]
+z_index = 100
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="DragIcon" type="TextureRect" parent="InventoryUI/DragOverlay" unique_id=956343410]
+visible = false
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 150.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
