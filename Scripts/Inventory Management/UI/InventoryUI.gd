@@ -9,6 +9,12 @@ var slot_scene: PackedScene
 var selected_slot_index = -1
 var slot_uis = []
 
+var current_drop_target: int = -1
+
+@onready var drag_icon: TextureRect = $DragOverlay/DragIcon
+
+
+
 
 func _ready() -> void:
 
@@ -26,6 +32,16 @@ func _ready() -> void:
 
 	# Create the inventory slots
 	create_slots()
+	
+	drag_icon.hide()
+	
+func _process(delta: float) -> void:
+	
+	update_drag_visual()
+	
+	# Only detect drop targets while dragging
+	if drag_icon.visible:
+		update_drop_target()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -52,48 +68,31 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func create_slots() -> void:
-
-	# Remove any existing slots
 	for child in grid_container.get_children():
 		child.queue_free()
 
-	# Clear the current array
 	slot_uis.clear()
-	
-	# Create one UI slot for every inventory slot
+
 	for i in range(inventory.slots.size()):
-
 		var slot_ui = slot_scene.instantiate()
-
 		grid_container.add_child(slot_ui)
-		
-		# Set the slot index
+
 		slot_ui.slot_index = i
-		
-		# Connect the slot_clicked signal
 		slot_ui.slot_clicked.connect(_on_slot_clicked)
-		
-		# Append the slot
+		slot_ui.slot_dropped.connect(_on_slot_dropped)
+
 		slot_uis.append(slot_ui)
 		
-func _on_slot_clicked(slot_ui: Control) -> void:
-	
-	# Grab the index
-	var clicked_index: int = slot_ui.slot_index
-
-	# Handle invalid index
+func _on_slot_clicked(clicked_index: int) -> void:
 	if selected_slot_index == -1:
-		
-		# See if it is empty
+		# Select an occupied slot.
 		if inventory.slots[clicked_index].is_empty():
 			return
-
-		# Set the selected slot index
+			
 		selected_slot_index = clicked_index
 
 	else:
-		
-		# Swap the slots
+		# Move or swap the selected item.
 		inventory.swap_slots(selected_slot_index, clicked_index)
 		selected_slot_index = -1
 
@@ -106,12 +105,86 @@ func update_selection() -> void:
 
 
 func update_inventory() -> void:
-
-	var ui_slots = grid_container.get_children()
-
 	for i in range(inventory.slots.size()):
-
 		var inventory_slot: InventorySlot = inventory.slots[i]
-		var slot_ui = ui_slots[i]
-
+		var slot_ui = slot_uis[i]
+		
 		slot_ui.set_slot(inventory_slot)
+		
+	update_selection()
+	
+func _on_slot_dropped(source_index: int, target_index: int) -> void:
+	
+	# Clear the current selection
+	selected_slot_index = -1
+	
+	# Make sure the source slot is valid.
+	if source_index < 0 or source_index >= inventory.slots.size():
+		return
+		
+	# Make sure the target slot is valid
+	if target_index < 0 or target_index >= inventory.slots.size():
+		update_selection()
+		return
+		
+	# Move or swap the items.
+	if target_index >= 0 and target_index < inventory.slots.size():
+		inventory.swap_slots(source_index, target_index)
+	
+	
+	# Refresh the inventory and selection borders
+	update_selection()
+	update_inventory()
+	
+func start_drag_visual(item_texture: Texture2D) -> void:
+	
+	drag_icon.texture = item_texture
+	drag_icon.size = Vector2(150, 150)
+	drag_icon.show()
+	
+	drag_icon.position = get_viewport().get_mouse_position() - drag_icon.size / 2
+	
+func update_drag_visual() -> void:
+	
+	if drag_icon.visible:
+		drag_icon.position = get_viewport().get_mouse_position() - drag_icon.size / 2
+		
+func stop_drag_visual() -> void:
+	
+	drag_icon.hide()
+	drag_icon.texture = null
+	
+	# Remove the drag border
+	if current_drop_target >= 0 and current_drop_target < slot_uis.size():
+		slot_uis[current_drop_target].set_drop_target(false)
+		
+	current_drop_target = -1
+	
+func update_drop_target() -> void:
+	
+	var hovered_control = get_viewport().gui_get_hovered_control()
+	var target_index: int = -1
+	
+	while hovered_control != null:
+		
+		if hovered_control is Panel and hovered_control.has_method("set_drop_target"):
+			target_index = hovered_control.slot_index
+			break
+			
+		hovered_control = hovered_control.get_parent()
+		
+	# Only update the borders if the target changed.
+	if target_index == current_drop_target:
+		return
+		
+	# Remove the previous highlight
+	if current_drop_target >= 0 and current_drop_target < slot_uis.size():
+		slot_uis[current_drop_target].set_drop_target(false)
+		
+	# Highlight the new target
+	current_drop_target = target_index
+
+	if current_drop_target >= 0 and current_drop_target < slot_uis.size():
+		slot_uis[current_drop_target].set_drop_target(true)
+	
+	

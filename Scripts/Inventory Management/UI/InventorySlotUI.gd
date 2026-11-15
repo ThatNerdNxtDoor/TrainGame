@@ -23,15 +23,28 @@ extends Panel
 # Get the selected border
 @onready var selected_border: Panel = $SelectedBorder
 
+# Get the drag border
+@onready var drop_target_border: Panel = $DropTargetBorder
+
+# Variable for drag
+#@onready var drag_icon: TextureRect = $DragIcon # The visual icon that follows the mouse
+
 # variable to handle if to right click for the tooltip or not
 @export var right_click_tool_tip: bool = true
 
 # Create a signal
-signal slot_clicked(slot_ui: Control)
+signal slot_clicked(slot_index: int)
+
+signal slot_dropped(source_index: int, target_index: int)
+
 
 var slot_index: int = -1
 
 var current_slot: InventorySlot = null
+
+# Click and drag variables
+var is_dragging: bool = false # Whether the player is dragging an item
+var drag_start_position: Vector2 # Where the drag began
 
 func _ready() -> void:
 	
@@ -41,6 +54,16 @@ func _ready() -> void:
 	# Hide the hover and selected border
 	hover_border.hide()
 	selected_border.hide()
+	
+	# Hide the drag border
+	drop_target_border.hide()
+	
+	# Hide the drag icon
+	#drag_icon.hide()
+	
+func _process(delta: float) -> void:
+	
+	pass
 	
 
 func set_slot(slot: InventorySlot) -> void:
@@ -75,17 +98,40 @@ func set_selected(selected: bool) -> void:
 	
 func _gui_input(event: InputEvent) -> void:
 	
-	# Check to ensure it is the mouse
 	if event is InputEventMouseButton:
-		
-		# Validate that is is the left mouse that is clicked
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			slot_clicked.emit(slot_index)
 			
-			# Emit the signal
-			slot_clicked.emit(self)
-			
-			# Stop it from propogating to other nodes
+			if current_slot != null and not current_slot.is_empty():
+				start_drag()
+				
 			accept_event()
+			
+		elif event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
+			
+			if is_dragging:
+				is_dragging = false;
+				
+				var inventory_ui = get_tree().get_first_node_in_group("inventory_ui")
+				
+				if inventory_ui != null:
+					inventory_ui.stop_drag_visual()
+				
+				var target_index: int = -1
+				
+				var hovered_control = get_viewport().gui_get_hovered_control()
+				
+				while hovered_control != null:
+					if hovered_control is Panel and hovered_control.has_method("set_slot"):
+						target_index = hovered_control.slot_index
+						break
+						
+					hovered_control = hovered_control.get_parent()
+					
+				
+				slot_dropped.emit(slot_index, target_index)
+				
+				accept_event()
 		
 		elif event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 			
@@ -97,6 +143,7 @@ func _gui_input(event: InputEvent) -> void:
 				else:
 					hover_border.show()
 					tooltip_panel.show()
+
 
 			
 	
@@ -122,4 +169,25 @@ func _on_mouse_exited() -> void:
 	
 	hover_border.hide()
 	
+	
+# Function for drag
+func start_drag() -> void:
+	
+	# Make sure the slot contains an item
+	if current_slot == null or current_slot.is_empty():
+		return
+		
+	# Get the item's icon
+	var inventory_ui = get_tree().get_first_node_in_group("inventory_ui")
+	
+	if inventory_ui == null:
+		return
+		
+	inventory_ui.start_drag_visual(current_slot.item.icon)
+	
+	# Mark that dragging has started
+	is_dragging = true
+	
+func set_drop_target(is_target: bool) -> void:
+	drop_target_border.visible = is_target
 	
