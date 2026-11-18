@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bio8khwbtrpic"]
+
+[ext_resource type="Texture2D" uid="uid://c1jywdw2nayqy" path="res://Textures/Medkit.jpg" id="1_6pfvj"]
+[ext_resource type="Script" uid="uid://bq8xvodag7gb0" path="res://Scripts/Inventory/ItemData.gd" id="1_o3mds"]
+
+[resource]
+script = ExtResource("1_o3mds")
+item_name = "Medkit"
+item_id = "med_kit"
+icon = ExtResource("1_6pfvj")
+metadata/_custom_type_script = "uid://bq8xvodag7gb0"
